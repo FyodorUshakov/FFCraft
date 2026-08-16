@@ -1,14 +1,11 @@
 # FFCraft
 
+**简体中文** | [English](README_EN.md)
+
 轻量影音工具箱（Built with Flutter）：基于 ffmpeg 的音视频图形化工具，支持音频转码、
 视频转码、无损合流封装、音视频拼接。使用 Flutter / Material 3 开发，淡蓝主题并跟随系统
 自动切换深色 / 浅色，全局内嵌 MiSans 字体保证中文渲染粗细均匀；日志使用内嵌
 Cascadia Mono 等宽字体。
-
-A lightweight audio & video toolkit (Built with Flutter) powered by ffmpeg:
-audio/video conversion, lossless muxing, and concatenation — wrapped in a clean
-Material 3 UI with light-blue theming, automatic dark mode, bundled MiSans &
-Cascadia Mono fonts, and 6 UI languages.
 
 支持多语言：简体中文、繁體中文、English、Русский、日本語、한국어，
 在「设置 → 语言」中切换，选择即时生效并自动记忆；「设置 → 关于 FFCraft」可查看
@@ -42,7 +39,7 @@ Cascadia Mono fonts, and 6 UI languages.
 ### 拼接
 
 - 复制模式（默认）：`concat demuxer + -c copy`，无质量损失，要求各段编码参数一致
-- 兼容模式：重新编码为 H.264 + AAC 后再拼接，不同编码也能拼
+- 兼容模式：重新编码为 H.265 + AAC 后再拼接，不同编码也能拼
 
 ## 环境要求
 
@@ -106,9 +103,10 @@ flutter run -d linux    # 或 -d macos
 ## CI 构建
 
 仓库内置 GitHub Actions 工作流（`.github/workflows/build.yml`），推送后会自动在
-Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并上传构建产物。
+Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并上传构建产物；
+推送 `v*` 版本标签时还会自动创建 GitHub Release。
 
-## 打包发布版
+## 打包发布版（Windows）
 
 ```powershell
 .\build_release.ps1
@@ -149,11 +147,11 @@ ffmpeg_GUI_Flutter/
 │   ├── services/        # ffmpeg 查找、时长探测、任务构建
 │   ├── state/           # 全局状态与批量执行
 │   ├── screens/         # 主界面
-│   └── widgets/         # 队列 / 合流面板、参数表单、日志、引擎设置
+│   └── widgets/         # 队列 / 合流面板、参数表单、日志、设置与关于
 ├── assets/fonts/        # 内嵌 MiSans + Cascadia Mono
-├── windows/             # Windows runner（窗口标题 / 图标 / UTF-8 编译）
+├── windows/ linux/ macos/   # 三平台 runner
 ├── tools/               # 图标生成
 ├── test/                # 参数生成与界面测试
-├── build_release.ps1    # 一键打包脚本
-└── README.md
+├── build_release.ps1    # Windows 一键打包脚本
+└── README.md / README_EN.md
 ```
