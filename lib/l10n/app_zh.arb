@@ -81,6 +81,8 @@
   "qualityRangeVorbis": "0-10（越高越好）",
   "vbrQuality": "VBR 质量",
   "qualityRangeHint": "数值越低质量越高、文件越大；数值越高文件越小（范围 {range}）",
+  "coverNotSupportedHint": "OGG/Opus/WAV 容器不支持内嵌封面，转换时封面将被忽略",
+  "decodeTailInfo": "输出完整可正常播放；源文件尾部附加数据（常见于网易云下载的 FLAC）已忽略",
   "@qualityRangeHint": {"placeholders": {"range": {"type": "String"}}},
   "videoCodec": "视频编码",
   "hardwareAccel": "硬件加速",

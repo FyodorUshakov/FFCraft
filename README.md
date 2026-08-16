@@ -117,7 +117,7 @@ Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并�
 | 产物 | 说明 |
 | --- | --- |
 | `FFCraft\` | 便携目录，拷走即用 |
-| `FFCraft_v1.6.1_portable.zip` | 便携版压缩包，解压后双击 `FFCraft.exe` 即可 |
+| `FFCraft_v1.6.2_portable.zip` | 便携版压缩包，解压后双击 `FFCraft.exe` 即可 |
 
 ## 许可
 
@@ -133,6 +133,9 @@ Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并�
 - 列表底部有虚线拖放区，可继续拖入更多文件或文件夹。
 - 日志自动展开，并带高亮规则：时间戳淡化、错误红色、警告橙黄、
   进度指标淡蓝；可一键复制日志；转码中出现解码错误会提示“完成（有解码警告）”。
+- 网易云音乐 ncm 解密出的 FLAC 常在文件末尾附带一段水印 / 附加数据（不是真实音频）。
+  ffmpeg 解码时会把它当成损坏的最后一帧报错（invalid sync code 等）。程序已识别此类
+  情况：只要输出完整、可正常播放，就只显示提示而不标记“有解码警告”，不影响转换结果。
 - 自检模式：设置环境变量 `FFMPEG_SELFTEST=1`、
   `FFMPEG_SELFTEST_MODE=audio|video|mux|concat`、
   `FFMPEG_SELFTEST_FILES=<用 | 分隔>`、`FFMPEG_SELFTEST_OUTDIR=<目录>`、

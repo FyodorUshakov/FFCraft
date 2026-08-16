@@ -29,6 +29,14 @@ extension AudioCodecX on AudioCodec {
   bool get isLossless =>
       this == AudioCodec.flac || this == AudioCodec.alac || this == AudioCodec.wav;
 
+  /// 输出容器是否支持内嵌封面（attached_pic）。
+  /// 实测 OGG(Vorbis) / Opus / WAV 容器不支持图片流，映射会导致整个任务失败。
+  bool get supportsCoverArt =>
+      this == AudioCodec.aac ||
+      this == AudioCodec.mp3 ||
+      this == AudioCodec.flac ||
+      this == AudioCodec.alac;
+
   String get outputExt => switch (this) {
         AudioCodec.aac => 'm4a',
         AudioCodec.mp3 => 'mp3',
@@ -126,7 +134,12 @@ class AudioSettings {
     } else {
       args.addAll(['-map_metadata', '-1']);
     }
-    args.add('-vn');
+    // 只映射音频轨；若目标容器支持且源文件内嵌封面图（attached_pic），
+    // 则一并原样复制，避免封面随 -vn 被丢弃。
+    args.addAll(['-map', '0:a?']);
+    if (codec.supportsCoverArt) {
+      args.addAll(['-map', '0:v?', '-c:v', 'copy']);
+    }
     args.addAll(['-c:a', codec.ffmpegName]);
 
     if (sampleRate != 'keep') {

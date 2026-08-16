@@ -81,6 +81,8 @@
   "qualityRangeVorbis": "0-10 (больше — лучше)",
   "vbrQuality": "Качество VBR",
   "qualityRangeHint": "Меньше значение — выше качество и крупнее файл; больше — файл меньше (диапазон {range})",
+  "coverNotSupportedHint": "Контейнеры OGG/Opus/WAV не поддерживают встроенные обложки — при конвертации обложка будет пропущена",
+  "decodeTailInfo": "Вывод полный и нормально воспроизводится; дополнительные данные в конце исходного файла (часто бывают во FLAC, скачанных из NetEase Cloud Music) были проигнорированы",
   "@qualityRangeHint": {"placeholders": {"range": {"type": "String"}}},
   "videoCodec": "Видеокодек",
   "hardwareAccel": "Аппаратное ускорение",

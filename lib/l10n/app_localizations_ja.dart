@@ -254,6 +254,14 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get coverNotSupportedHint =>
+      'OGG/Opus/WAV コンテナは埋め込みカバーアートに対応していないため、変換時にカバーは省略されます';
+
+  @override
+  String get decodeTailInfo =>
+      '出力は完全で再生に問題ありません。ソースファイル末尾の付加データ（NetEase Cloud Music の FLAC ダウンロードに多く見られる）は無視されました';
+
+  @override
   String get videoCodec => '動画コーデック';
 
   @override

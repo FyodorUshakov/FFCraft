@@ -252,6 +252,12 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get coverNotSupportedHint => 'OGG/Opus/WAV 容器不支持内嵌封面，转换时封面将被忽略';
+
+  @override
+  String get decodeTailInfo => '输出完整可正常播放；源文件尾部附加数据（常见于网易云下载的 FLAC）已忽略';
+
+  @override
   String get videoCodec => '视频编码';
 
   @override
@@ -945,6 +951,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String qualityRangeHint(String range) {
     return '數值越低品質越高、檔案越大；數值越高檔案越小（範圍 $range）';
   }
+
+  @override
+  String get coverNotSupportedHint => 'OGG/Opus/WAV 容器不支援內嵌封面，轉換時封面將被忽略';
+
+  @override
+  String get decodeTailInfo => '輸出完整可正常播放；來源檔案尾部附加資料（常見於網易雲下載的 FLAC）已忽略';
 
   @override
   String get videoCodec => '影片編碼';

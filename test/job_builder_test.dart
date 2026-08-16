@@ -18,7 +18,9 @@ void main() {
       final args = s.buildArgs(input, outDir);
       expect(args, containsAllInOrder(['-c:a', 'aac']));
       expect(args, containsAllInOrder(['-b:a', '192k']));
-      expect(args, contains('-vn'));
+      expect(args, containsAllInOrder(['-map', '0:a?']));
+      expect(args, containsAllInOrder(['-map', '0:v?', '-c:v', 'copy']));
+      expect(args, isNot(contains('-vn')));
       expect(args, containsAllInOrder(['-map_metadata', '0']));
       expect(norm(args.last), norm(r'D:\Out\测试 文件.m4a'));
     });
@@ -45,6 +47,30 @@ void main() {
       expect(args, containsAllInOrder(['-sample_fmt', 's32']));
       expect(args, containsAllInOrder(['-compression_level', '8']));
       expect(args.last, endsWith('.flac'));
+    });
+
+    test('不支持封面的容器不映射图片流', () {
+      for (final c in [AudioCodec.wav, AudioCodec.opus, AudioCodec.vorbis]) {
+        final args = AudioSettings(codec: c).buildArgs(input, outDir);
+        expect(args, containsAllInOrder(['-map', '0:a?']));
+        expect(args, isNot(contains('-c:v')));
+        expect(args, isNot(contains('0:v?')));
+      }
+      final wav = AudioSettings(codec: AudioCodec.wav).buildArgs(input, outDir);
+      expect(wav.last, endsWith('.wav'));
+    });
+
+    test('支持封面的容器映射图片流', () {
+      for (final c in [
+        AudioCodec.aac,
+        AudioCodec.mp3,
+        AudioCodec.flac,
+        AudioCodec.alac,
+      ]) {
+        final args = AudioSettings(codec: c).buildArgs(input, outDir);
+        expect(args, containsAllInOrder(['-map', '0:a?']));
+        expect(args, containsAllInOrder(['-map', '0:v?', '-c:v', 'copy']));
+      }
     });
 
     test('ALAC 使用平面采样格式', () {

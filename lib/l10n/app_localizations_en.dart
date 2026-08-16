@@ -266,6 +266,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get coverNotSupportedHint =>
+      'OGG, Opus and WAV containers do not support embedded cover art; the cover will be omitted';
+
+  @override
+  String get decodeTailInfo =>
+      'Output is complete and playable; extra data at the end of the source file (common in NetEase Cloud Music FLAC downloads) was ignored';
+
+  @override
   String get videoCodec => 'Video codec';
 
   @override

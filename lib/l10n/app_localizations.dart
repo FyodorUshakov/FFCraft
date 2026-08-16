@@ -567,6 +567,18 @@ abstract class AppLocalizations {
   /// **'数值越低质量越高、文件越大；数值越高文件越小（范围 {range}）'**
   String qualityRangeHint(String range);
 
+  /// No description provided for @coverNotSupportedHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'OGG/Opus/WAV 容器不支持内嵌封面，转换时封面将被忽略'**
+  String get coverNotSupportedHint;
+
+  /// No description provided for @decodeTailInfo.
+  ///
+  /// In zh, this message translates to:
+  /// **'输出完整可正常播放；源文件尾部附加数据（常见于网易云下载的 FLAC）已忽略'**
+  String get decodeTailInfo;
+
   /// No description provided for @videoCodec.
   ///
   /// In zh, this message translates to:

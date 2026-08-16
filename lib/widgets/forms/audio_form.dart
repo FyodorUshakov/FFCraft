@@ -37,6 +37,10 @@ class AudioForm extends StatelessWidget {
             selected: s.codec,
             onSelected: _switchCodec,
           ),
+          if (!s.codec.supportsCoverArt) ...[
+            const SizedBox(height: 8),
+            HintText(l10n.coverNotSupportedHint),
+          ],
           const SizedBox(height: 16),
           _LabeledDropdown(
             label: l10n.sampleRate,

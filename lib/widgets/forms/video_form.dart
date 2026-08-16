@@ -62,9 +62,8 @@ class VideoForm extends StatelessWidget {
       final cands = _hwCandidatesFor(c);
       if (cands.isNotEmpty) {
         s.hwAccel = true;
-        s.hwEncoder = s.hwEncoder.isNotEmpty && cands.contains(s.hwEncoder)
-            ? s.hwEncoder
-            : cands.first;
+        // 硬件编码器始终默认选中候选列表中的第一个
+        s.hwEncoder = cands.first;
       } else {
         s.hwAccel = false;
         s.hwEncoder = '';
@@ -120,10 +119,8 @@ class VideoForm extends StatelessWidget {
                       if (v) {
                         final cands = _hwCandidatesFor(x.codec);
                         x.hwAccel = true;
-                        x.hwEncoder = x.hwEncoder.isNotEmpty &&
-                                cands.contains(x.hwEncoder)
-                            ? x.hwEncoder
-                            : cands.first;
+                        // 重新开启时同样默认选中列表第一个
+                        x.hwEncoder = cands.first;
                       } else {
                         x.hwAccel = false;
                         x.hwEncoder = '';

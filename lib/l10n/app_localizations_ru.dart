@@ -266,6 +266,14 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get coverNotSupportedHint =>
+      'Контейнеры OGG/Opus/WAV не поддерживают встроенные обложки — при конвертации обложка будет пропущена';
+
+  @override
+  String get decodeTailInfo =>
+      'Вывод полный и нормально воспроизводится; дополнительные данные в конце исходного файла (часто бывают во FLAC, скачанных из NetEase Cloud Music) были проигнорированы';
+
+  @override
   String get videoCodec => 'Видеокодек';
 
   @override

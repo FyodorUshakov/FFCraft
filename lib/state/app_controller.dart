@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Color, Locale;
@@ -21,6 +22,16 @@ import '../models/log_style.dart';
 import '../services/probe.dart';
 import '../services/wallpaper_color.dart';
 import '../l10n/l10n_helper.dart';
+
+/// FLAC 帧解析类错误的特征行（网易云 ncm 解出的 FLAC 常在文件末尾
+/// 附加水印数据，解码时报这类错误，但输出完整可播放）。
+bool isFlacFrameDecodeError(String line) {
+  final l = line.toLowerCase();
+  return l.contains('invalid sync code') ||
+      l.contains('invalid frame header') ||
+      l.contains('decode_frame() failed') ||
+      l.contains('decoding error');
+}
 
 /// 全局状态：模式、设置、队列、引擎与批量任务。
 class AppController extends ChangeNotifier {
@@ -534,8 +545,8 @@ class AppController extends ChangeNotifier {
     } else {
       addLog(
         l10n(
-          (a) => a.doneAll(doneCount - failedCount, failedCount),
-          '全部完成：成功 ${doneCount - failedCount} 个，失败 $failedCount 个',
+          (a) => a.doneAll(doneCount, failedCount),
+          '全部完成：成功 $doneCount 个，失败 $failedCount 个',
         ),
       );
     }
@@ -678,13 +689,17 @@ class AppController extends ChangeNotifier {
         if (l == 'progress=end') _setJobProgress(job, item, 1.0);
       }
     }, onError: (_) {});
+    final errorLines = <String>[];
     proc.stderr
         .transform(const Utf8Decoder(allowMalformed: true))
         .transform(const LineSplitter())
         .listen((line) {
       final l = line.trim();
       if (l.isNotEmpty && !l.startsWith('frame=') && !l.startsWith('fps=')) {
-        if (classifyLogLine(l) == LogKind.error) sawError = true;
+        if (classifyLogLine(l) == LogKind.error) {
+          sawError = true;
+          errorLines.add(l);
+        }
         addLog('   $l');
       }
     }, onError: (_) {});
@@ -713,6 +728,16 @@ class AppController extends ChangeNotifier {
 
     final ok = code == 0 && File(job.outputPath).existsSync();
     if (ok && sawError) {
+      if (await _isBenignTailWatermark(job, duration, errorLines)) {
+        // 文件尾附加数据（典型：网易云 ncm 解出的 FLAC 水印尾巴）：
+        // 输出完整可播放，不损坏文件，降级为提示而非警告。
+        addLog(l10n(
+          (a) => a.decodeTailInfo,
+          '   ℹ 输出完整可正常播放；源文件尾部附加数据（常见于网易云下载的 FLAC）已忽略',
+        ));
+        _finishJob(job, item, true, '');
+        return;
+      }
       addLog(l10n((a) => a.decodeWarning, '   ⚠ 输出中存在解码错误/警告，请检查源文件是否完整'));
       if (item != null) {
         item.hasWarning = true;
@@ -741,6 +766,23 @@ class AppController extends ChangeNotifier {
     _jobProgress[job.outputPath] = v;
     if (item != null) item.progress = v;
     notifyListeners();
+  }
+
+  /// 判断报错是否属于「文件尾附加数据」型（典型：网易云 ncm 解出的
+  /// FLAC 末尾水印）。仅当输出时长与源文件一致（可完整播放）且错误为
+  /// FLAC 帧解析类时才降级为提示，避免掩盖真实的源文件损坏。
+  Future<bool> _isBenignTailWatermark(
+    Job job,
+    double? inputDuration,
+    List<String> errorLines,
+  ) async {
+    if (mode != AppMode.audio && mode != AppMode.video) return false;
+    if (inputDuration == null || inputDuration <= 0) return false;
+    if (!errorLines.any(isFlacFrameDecodeError)) return false;
+    final outDur = await MediaProbe.duration(engineDir, job.outputPath);
+    if (outDur == null || outDur <= 0) return false;
+    final tolerance = math.max(1.0, inputDuration * 0.02);
+    return (outDur - inputDuration).abs() <= tolerance;
   }
 
   void _finishJob(Job job, QueueItem? item, bool ok, String detail) {

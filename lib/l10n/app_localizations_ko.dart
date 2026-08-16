@@ -256,6 +256,14 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get coverNotSupportedHint =>
+      'OGG/Opus/WAV 컨테이너는 포함된 표지 이미지를 지원하지 않아 변환 시 표지가 제외됩니다';
+
+  @override
+  String get decodeTailInfo =>
+      '출력이 완전하며 재생에 문제없습니다. 소스 파일 끝의 부가 데이터(NetEase Cloud Music에서 다운로드한 FLAC에서 흔함)는 무시되었습니다';
+
+  @override
   String get videoCodec => '비디오 코덱';
 
   @override

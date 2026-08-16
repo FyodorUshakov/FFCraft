@@ -119,7 +119,7 @@ Outputs under `dist\`:
 | Artifact | Description |
 | --- | --- |
 | `FFCraft\` | Portable folder, copy and run |
-| `FFCraft_v1.6.1_portable.zip` | Portable archive; unzip and double-click `FFCraft.exe` |
+| `FFCraft_v1.6.2_portable.zip` | Portable archive; unzip and double-click `FFCraft.exe` |
 
 ## License
 
@@ -139,6 +139,11 @@ not part of this project's MIT license.
 - The log expands automatically with highlighting (dim timestamps, red errors,
   orange warnings, blue progress), one-click copy, and a
   "done with decode warnings" hint when needed.
+- FLAC files decrypted from NetEase Cloud Music (.ncm) often carry a watermark /
+  extra payload at the end of the file (not real audio). ffmpeg may report it as a
+  damaged final frame ("invalid sync code" etc.). FFCraft recognizes this case: as
+  long as the output is complete and playable, it shows a gentle hint instead of a
+  "decode warning" — the conversion result is unaffected.
 - Self-test: set `FFMPEG_SELFTEST=1`, `FFMPEG_SELFTEST_MODE=audio|video|mux|concat`,
   `FFMPEG_SELFTEST_FILES=<pipe-separated>`, `FFMPEG_SELFTEST_OUTDIR=<dir>` and
   `FFMPEG_SELFTEST_OUT=<file>`, then start the app to verify the flow.
