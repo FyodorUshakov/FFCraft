@@ -80,6 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: read
     steps:
       - name: Download artifacts
         run: gh run download "${{ github.run_id }}" -D artifacts
