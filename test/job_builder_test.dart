@@ -9,6 +9,8 @@ import 'package:ffmpeg_gui_flutter/services/job_builder.dart';
 void main() {
   const input = r'D:\Music\测试 文件.flac';
   const outDir = r'D:\Out';
+  // 跨平台：把路径统一成正斜杠后再比较
+  String norm(String p) => p.replaceAll('\\', '/');
 
   group('音频转码参数', () {
     test('AAC 固定码率', () {
@@ -18,7 +20,7 @@ void main() {
       expect(args, containsAllInOrder(['-b:a', '192k']));
       expect(args, contains('-vn'));
       expect(args, containsAllInOrder(['-map_metadata', '0']));
-      expect(args.last, r'D:\Out\测试 文件.m4a');
+      expect(norm(args.last), norm(r'D:\Out\测试 文件.m4a'));
     });
 
     test('MP3 VBR 质量', () {
@@ -66,7 +68,7 @@ void main() {
     test('输出与输入同名时加 _out 后缀', () {
       final s = AudioSettings(codec: AudioCodec.aac);
       final p = s.outputPathFor(r'D:\Out\same.m4a', r'D:\Out');
-      expect(p, r'D:\Out\same_out.m4a');
+      expect(norm(p), norm(r'D:\Out\same_out.m4a'));
     });
   });
 

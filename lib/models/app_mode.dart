@@ -57,8 +57,11 @@ String extensionOf(String path) {
 /// 生成输出路径；若与输入同名（如 m4a→m4a）则追加 _out 后缀避免覆盖。
 String safeOutputPath(String outDir, String input, String stem, String ext) {
   var path = '$outDir${Platform.pathSeparator}$stem.$ext';
-  if (path.toLowerCase() == input.toLowerCase()) {
+  // 比较时统一分隔符，避免 Windows 反斜杠 / Unix 正斜杠导致的误判
+  if (_normPath(path) == _normPath(input)) {
     path = '$outDir${Platform.pathSeparator}${stem}_out.$ext';
   }
   return path;
 }
+
+String _normPath(String p) => p.replaceAll('\\', '/').toLowerCase();
