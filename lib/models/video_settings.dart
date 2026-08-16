@@ -75,6 +75,8 @@ class VideoSettings {
   int audioBitrate; // kbps
   bool copyMetadata;
   bool pixCompat; // yuv420p 兼容模式
+  bool hwAccel; // 硬件加速
+  String hwEncoder; // 如 h264_nvenc
 
   VideoSettings({
     this.codec = VideoCodec.h264,
@@ -90,6 +92,8 @@ class VideoSettings {
     this.audioBitrate = 192,
     this.copyMetadata = true,
     this.pixCompat = true,
+    this.hwAccel = false,
+    this.hwEncoder = '',
   });
 
   factory VideoSettings.fromJson(Map<String, dynamic> json) {
@@ -111,6 +115,8 @@ class VideoSettings {
       audioBitrate: (json['audioBitrate'] as num?)?.toInt() ?? 192,
       copyMetadata: json['copyMetadata'] as bool? ?? true,
       pixCompat: json['pixCompat'] as bool? ?? true,
+      hwAccel: json['hwAccel'] as bool? ?? false,
+      hwEncoder: json['hwEncoder'] as String? ?? '',
     );
   }
 
@@ -128,6 +134,8 @@ class VideoSettings {
         'audioBitrate': audioBitrate,
         'copyMetadata': copyMetadata,
         'pixCompat': pixCompat,
+        'hwAccel': hwAccel,
+        'hwEncoder': hwEncoder,
       };
 
   String encode() => jsonEncode(toJson());
@@ -155,6 +163,9 @@ class VideoSettings {
     final name = input.split(RegExp(r'[\\/]')).last;
     final dot = name.lastIndexOf('.');
     final stem = dot > 0 ? name.substring(0, dot) : name;
+    if (hwAccel && hwEncoder.isNotEmpty) {
+      return safeOutputPath(outDir, input, stem, 'mp4');
+    }
     String ext;
     if (codec == VideoCodec.copy) {
       final src = extensionOf(input);
@@ -176,11 +187,16 @@ class VideoSettings {
       args.addAll(['-map_metadata', '-1']);
     }
 
+    final usingHw = codec != VideoCodec.copy && hwAccel && hwEncoder.isNotEmpty;
     if (codec != VideoCodec.copy) {
-      args.addAll(['-c:v', codec.ffmpegName]);
-      final presetList = presetsFor(codec);
-      if (presetList.isNotEmpty && preset.isNotEmpty) {
-        args.addAll(['-preset', preset]);
+      if (usingHw) {
+        args.addAll(['-c:v', hwEncoder]);
+      } else {
+        args.addAll(['-c:v', codec.ffmpegName]);
+        final presetList = presetsFor(codec);
+        if (presetList.isNotEmpty && preset.isNotEmpty) {
+          args.addAll(['-preset', preset]);
+        }
       }
       final res = effectiveResolution;
       if (res.isNotEmpty) {
@@ -193,7 +209,47 @@ class VideoSettings {
         args.addAll(['-r', framerate]);
       }
 
-      if (bitrateMode == VideoBitrateMode.crf && codec.supportsCrf) {
+      if (usingHw) {
+        final enc = hwEncoder;
+        switch (bitrateMode) {
+          case VideoBitrateMode.crf:
+            if (enc.contains('nvenc')) {
+              args.addAll(['-rc', 'vbr', '-cq', crf.clamp(0, 51).toString()]);
+            } else if (enc.contains('qsv')) {
+              args.addAll(
+                  ['-global_quality', crf.clamp(0, 51).toString()]);
+            } else if (enc.contains('videotoolbox')) {
+              args.addAll(['-q:v', crf.clamp(0, 100).toString()]);
+            } else if (enc.contains('amf')) {
+              args.addAll(
+                  ['-rc', 'cqp', '-qp_i', '$crf', '-qp_p', '$crf']);
+            } else {
+              args.addAll(['-b:v', '${bitrate}k']);
+            }
+          case VideoBitrateMode.cbr:
+            args.addAll(['-b:v', '${bitrate}k']);
+            if (enc.contains('nvenc') || enc.contains('qsv')) {
+              args.addAll([
+                '-minrate', '${bitrate}k',
+                '-maxrate', '${bitrate}k',
+                '-bufsize', '${bitrate * 2}k',
+              ]);
+            }
+          case VideoBitrateMode.vbr:
+            args.addAll(['-b:v', '${bitrate}k']);
+            if (enc.contains('nvenc') || enc.contains('qsv')) {
+              args.addAll([
+                '-maxrate', '${maxBitrate}k',
+                '-bufsize', '${maxBitrate * 2}k',
+              ]);
+            }
+          case VideoBitrateMode.abr:
+            args.addAll(['-b:v', '${bitrate}k']);
+        }
+        if (pixCompat) {
+          args.addAll(['-pix_fmt', 'yuv420p']);
+        }
+      } else if (bitrateMode == VideoBitrateMode.crf && codec.supportsCrf) {
         args.addAll(['-crf', crf.clamp(0, codec.maxCrf).toString()]);
       } else {
         switch (bitrateMode) {

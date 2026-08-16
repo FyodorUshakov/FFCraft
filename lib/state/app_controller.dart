@@ -49,6 +49,7 @@ class AppController extends ChangeNotifier {
   bool engineReady = false;
   String engineDir = '';
   String engineStatus = '检测中…';
+  Set<String> hwEncoders = {};
   bool engineDetecting = false;
   String userEngineDir = ''; // 用户手动指定的目录（默认留空）
   AppLocale locale = AppLocale.zhHans;
@@ -387,6 +388,7 @@ class AppController extends ChangeNotifier {
       engineReady = true;
       final version = await FfmpegManager.version(dir);
       engineStatus = version.split('\n').first.trim();
+      hwEncoders = await FfmpegManager.hardwareEncoders(dir);
     } catch (e) {
       engineDir = '';
       engineReady = false;
@@ -418,6 +420,7 @@ class AppController extends ChangeNotifier {
       engineDir = dir;
       engineReady = true;
       engineStatus = (await FfmpegManager.version(dir)).split('\n').first;
+      hwEncoders = await FfmpegManager.hardwareEncoders(dir);
     } catch (e) {
       engineDir = '';
       engineReady = false;

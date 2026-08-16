@@ -129,6 +129,30 @@ void main() {
       final n = VideoSettings(audioTrack: VideoAudioTrack.none);
       expect(n.buildArgs(vinput, outDir), contains('-an'));
     });
+
+    test('硬件加速 NVENC', () {
+      final s = VideoSettings(
+        hwAccel: true,
+        hwEncoder: 'h264_nvenc',
+        crf: 20,
+      );
+      final args = s.buildArgs(vinput, outDir);
+      expect(args, containsAllInOrder(['-c:v', 'h264_nvenc']));
+      expect(args, containsAllInOrder(['-rc', 'vbr', '-cq', '20']));
+      expect(args, containsAllInOrder(['-pix_fmt', 'yuv420p']));
+      expect(s.outputPathFor(vinput, outDir), endsWith('.mp4'));
+    });
+
+    test('硬件加速 QSV 全局质量', () {
+      final s = VideoSettings(
+        hwAccel: true,
+        hwEncoder: 'hevc_qsv',
+        crf: 26,
+      );
+      final args = s.buildArgs(vinput, outDir);
+      expect(args, containsAllInOrder(['-c:v', 'hevc_qsv']));
+      expect(args, containsAllInOrder(['-global_quality', '26']));
+    });
   });
 
   group('合流参数', () {

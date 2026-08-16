@@ -573,6 +573,30 @@ abstract class AppLocalizations {
   /// **'视频编码'**
   String get videoCodec;
 
+  /// No description provided for @hardwareAccel.
+  ///
+  /// In zh, this message translates to:
+  /// **'硬件加速'**
+  String get hardwareAccel;
+
+  /// No description provided for @hardwareAccelHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'使用显卡/核显编码，速度更快；是否可用取决于设备与 ffmpeg 编译'**
+  String get hardwareAccelHint;
+
+  /// No description provided for @hwEncoder.
+  ///
+  /// In zh, this message translates to:
+  /// **'硬件编码器'**
+  String get hwEncoder;
+
+  /// No description provided for @hwEncoderHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'未检测到可用的硬件编码器，请检查显卡驱动或 ffmpeg 是否包含相应模块'**
+  String get hwEncoderHint;
+
   /// No description provided for @codecCopy.
   ///
   /// In zh, this message translates to:

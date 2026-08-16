@@ -259,6 +259,20 @@ class AppLocalizationsKo extends AppLocalizations {
   String get videoCodec => '비디오 코덱';
 
   @override
+  String get hardwareAccel => '하드웨어 가속';
+
+  @override
+  String get hardwareAccelHint =>
+      'GPU/iGPU로 인코딩해 더 빠르게 처리합니다. 사용 가능 여부는 기기와 ffmpeg 빌드에 따라 다릅니다';
+
+  @override
+  String get hwEncoder => '하드웨어 인코더';
+
+  @override
+  String get hwEncoderHint =>
+      '사용 가능한 하드웨어 인코더가 없습니다. GPU 드라이버 또는 ffmpeg 빌드를 확인하세요';
+
+  @override
   String get codecCopy => '그대로 복사';
 
   @override

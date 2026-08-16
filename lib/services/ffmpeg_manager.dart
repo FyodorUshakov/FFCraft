@@ -127,4 +127,25 @@ class FfmpegManager {
       return l10n((a) => a.launchFailed(e.toString()), '启动失败: $e');
     }
   }
+
+  /// 查询当前 ffmpeg 支持的硬件编码器（nvenc / qsv / amf / videotoolbox 等）。
+  static Future<Set<String>> hardwareEncoders(String dir) async {
+    final set = <String>{};
+    try {
+      final r = await Process.run(
+        '$dir${Platform.pathSeparator}$exeName',
+        ['-hide_banner', '-encoders'],
+        workingDirectory: dir,
+      );
+      for (final line in r.stdout.toString().split('\n')) {
+        for (final m in RegExp(
+          r'(\S*(?:nvenc|qsv|amf|videotoolbox)\S*)',
+        ).allMatches(line)) {
+          final name = m.group(1);
+          if (name != null && name.isNotEmpty) set.add(name);
+        }
+      }
+    } catch (_) {}
+    return set;
+  }
 }

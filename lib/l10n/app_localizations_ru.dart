@@ -269,6 +269,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get videoCodec => 'Видеокодек';
 
   @override
+  String get hardwareAccel => 'Аппаратное ускорение';
+
+  @override
+  String get hardwareAccelHint =>
+      'Кодирование на GPU/iGPU для большей скорости; доступность зависит от устройства и сборки ffmpeg';
+
+  @override
+  String get hwEncoder => 'Аппаратный кодировщик';
+
+  @override
+  String get hwEncoderHint =>
+      'Аппаратные кодировщики не найдены; проверьте драйвер GPU или сборку ffmpeg';
+
+  @override
   String get codecCopy => 'Как есть';
 
   @override

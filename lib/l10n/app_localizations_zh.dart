@@ -255,6 +255,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get videoCodec => '视频编码';
 
   @override
+  String get hardwareAccel => '硬件加速';
+
+  @override
+  String get hardwareAccelHint => '使用显卡/核显编码，速度更快；是否可用取决于设备与 ffmpeg 编译';
+
+  @override
+  String get hwEncoder => '硬件编码器';
+
+  @override
+  String get hwEncoderHint => '未检测到可用的硬件编码器，请检查显卡驱动或 ffmpeg 是否包含相应模块';
+
+  @override
   String get codecCopy => '原样复制';
 
   @override
@@ -936,6 +948,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get videoCodec => '影片編碼';
+
+  @override
+  String get hardwareAccel => '硬體加速';
+
+  @override
+  String get hardwareAccelHint => '使用顯示卡/內顯編碼，速度更快；是否可用取決於裝置與 ffmpeg 編譯';
+
+  @override
+  String get hwEncoder => '硬體編碼器';
+
+  @override
+  String get hwEncoderHint => '未偵測到可用的硬體編碼器，請檢查顯示卡驅動或 ffmpeg 是否包含相應模組';
 
   @override
   String get codecCopy => '原樣複製';

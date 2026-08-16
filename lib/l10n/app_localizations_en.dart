@@ -269,6 +269,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get videoCodec => 'Video codec';
 
   @override
+  String get hardwareAccel => 'Hardware acceleration';
+
+  @override
+  String get hardwareAccelHint =>
+      'Encode with your GPU/iGPU for higher speed; availability depends on your device and ffmpeg build';
+
+  @override
+  String get hwEncoder => 'Hardware encoder';
+
+  @override
+  String get hwEncoderHint =>
+      'No hardware encoders detected; check your GPU driver or whether ffmpeg includes the required modules';
+
+  @override
   String get codecCopy => 'Copy as-is';
 
   @override

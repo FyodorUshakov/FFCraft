@@ -11,6 +11,20 @@ class VideoForm extends StatelessWidget {
 
   final AppController controller;
 
+  static const _knownHwEncoders = [
+    'h264_nvenc', 'hevc_nvenc',
+    'h264_qsv', 'hevc_qsv',
+    'h264_amf', 'hevc_amf',
+    'h264_videotoolbox', 'hevc_videotoolbox',
+  ];
+
+  /// 硬件编码器列表：优先显示本机检测到的，未检测到时展示全部候选。
+  List<String> get _hwList {
+    final available = controller.hwEncoders;
+    final filtered = _knownHwEncoders.where(available.contains).toList();
+    return filtered.isEmpty ? _knownHwEncoders : filtered;
+  }
+
   static const bitratePresets = [2000, 4000, 8000, 12000];
   static const resolutionOptions = [
     ('keep', 'keepOriginal'),
@@ -49,28 +63,61 @@ class VideoForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SectionLabel(l10n.videoCodec),
-          ChipGroup<VideoCodec>(
-            values: VideoCodec.values,
-            labelOf: (c) =>
-                c == VideoCodec.copy ? l10n.codecCopy : c.label,
-            selected: s.codec,
-            onSelected: _switchCodec,
-          ),
-          if (s.codec != VideoCodec.copy) ...[
-            const SizedBox(height: 16),
-            _DropdownField(
-              label: l10n.preset,
-              value: s.preset,
-              hint: s.codec == VideoCodec.av1
-                  ? l10n.presetHintAv1
-                  : l10n.presetHintX264,
-              items: [
-                for (final p in presetsFor(s.codec))
-                  (p, '$p · ${_presetDesc(l10n, s.codec, p)}'),
-              ],
-              onChanged: (v) => controller.updateVideo((x) => x.preset = v),
+          if (!s.hwAccel) ...[
+            SectionLabel(l10n.videoCodec),
+            ChipGroup<VideoCodec>(
+              values: VideoCodec.values,
+              labelOf: (c) =>
+                  c == VideoCodec.copy ? l10n.codecCopy : c.label,
+              selected: s.codec,
+              onSelected: _switchCodec,
             ),
+          ],
+          const SizedBox(height: 16),
+          SectionLabel(l10n.hardwareAccel),
+          SwitchRow(
+            title: l10n.hardwareAccel,
+            subtitle: l10n.hardwareAccelHint,
+            value: s.hwAccel,
+            onChanged: (v) => controller.updateVideo((x) {
+              x.hwAccel = v;
+              if (v) {
+                x.hwEncoder = x.hwEncoder.isEmpty ? _hwList.first : x.hwEncoder;
+              } else {
+                x.hwEncoder = '';
+              }
+            }),
+          ),
+          if (s.hwAccel) ...[
+            const SizedBox(height: 8),
+            _DropdownField(
+              label: l10n.hwEncoder,
+              value: s.hwEncoder,
+              hint: controller.hwEncoders.isEmpty ? l10n.hwEncoderHint : null,
+              items: [
+                for (final e in _hwList) (e, e),
+              ],
+              onChanged: (v) =>
+                  controller.updateVideo((x) => x.hwEncoder = v),
+            ),
+          ],
+          if (s.codec != VideoCodec.copy) ...[
+            if (!s.hwAccel) ...[
+              const SizedBox(height: 16),
+              _DropdownField(
+                label: l10n.preset,
+                value: s.preset,
+                hint: s.codec == VideoCodec.av1
+                    ? l10n.presetHintAv1
+                    : l10n.presetHintX264,
+                items: [
+                  for (final p in presetsFor(s.codec))
+                    (p, '$p · ${_presetDesc(l10n, s.codec, p)}'),
+                ],
+                onChanged: (v) =>
+                    controller.updateVideo((x) => x.preset = v),
+              ),
+            ],
             const SizedBox(height: 12),
             _DropdownField(
               label: l10n.resolution,
