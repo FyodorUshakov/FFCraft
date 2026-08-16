@@ -5,7 +5,7 @@ import 'screens/home_screen.dart';
 import 'state/app_controller.dart';
 
 /// 应用版本号（与 pubspec.yaml 保持一致）。
-const String kAppVersion = '1.6.0';
+const String kAppVersion = '1.6.1';
 
 class FfmpegGuiApp extends StatelessWidget {
   const FfmpegGuiApp({super.key, required this.controller});

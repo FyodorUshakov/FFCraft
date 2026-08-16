@@ -1,7 +1,7 @@
 name: ffmpeg_gui_flutter
 description: "ffmpeg 转换器：音频/视频转码、无损合流与拼接工具"
 publish_to: 'none'
-version: 1.6.0
+version: 1.6.1
 
 environment:
   sdk: ^3.12.2
