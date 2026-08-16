@@ -118,8 +118,8 @@ Outputs under `dist\`:
 
 | Artifact | Description |
 | --- | --- |
-| `ffmpeg_GUI_Flutter\` | Portable folder, copy and run |
-| `ffmpeg_GUI_v1.5.0_portable.zip` | Portable archive; unzip and double-click `ffmpeg_GUI.exe` |
+| `FFCraft\` | Portable folder, copy and run |
+| `FFCraft_v1.5.0_portable.zip` | Portable archive; unzip and double-click `FFCraft.exe` |
 
 ## License
 
@@ -146,7 +146,7 @@ not part of this project's MIT license.
 ## Project structure
 
 ```
-ffmpeg_GUI_Flutter/
+FFCraft/
 ├── lib/
 │   ├── models/          # per-mode settings & ffmpeg argument generation
 │   ├── services/        # ffmpeg discovery, probing, job building

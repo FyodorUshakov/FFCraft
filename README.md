@@ -116,8 +116,8 @@ Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并�
 
 | 产物 | 说明 |
 | --- | --- |
-| `ffmpeg_GUI_Flutter\` | 便携目录，拷走即用 |
-| `ffmpeg_GUI_v1.5.0_portable.zip` | 便携版压缩包，解压后双击 `ffmpeg_GUI.exe` 即可 |
+| `FFCraft\` | 便携目录，拷走即用 |
+| `FFCraft_v1.5.0_portable.zip` | 便携版压缩包，解压后双击 `FFCraft.exe` 即可 |
 
 ## 许可
 
@@ -141,7 +141,7 @@ Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并�
 ## 目录结构
 
 ```
-ffmpeg_GUI_Flutter/
+FFCraft/
 ├── lib/
 │   ├── models/          # 各模式设置与 ffmpeg 参数生成
 │   ├── services/        # ffmpeg 查找、时长探测、任务构建

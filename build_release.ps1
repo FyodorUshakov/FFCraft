@@ -7,7 +7,7 @@
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $dist = Join-Path $root 'dist'
-$appDir = Join-Path $dist 'ffmpeg_GUI_Flutter'
+$appDir = Join-Path $dist 'FFCraft'
 $version = 'v1.5.0'
 
 Write-Host '==> 1/3 flutter build windows --release'
@@ -25,7 +25,7 @@ New-Item -ItemType Directory -Path $appDir -Force | Out-Null
 Copy-Item (Join-Path $release '*') $appDir -Recurse -Force
 
 Write-Host '==> 3/3 生成便携 zip'
-$zip = Join-Path $dist "ffmpeg_GUI_${version}_portable.zip"
+$zip = Join-Path $dist "FFCraft_${version}_portable.zip"
 if (Test-Path $zip) { Remove-Item $zip -Force }
 $sevenZip = 'C:\Program Files\7-Zip\7z.exe'
 if (Test-Path $sevenZip) {

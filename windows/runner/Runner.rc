@@ -92,9 +92,9 @@ BEGIN
             VALUE "CompanyName", "com.ffmpeggui" "\0"
             VALUE "FileDescription", "FFCraft - 轻量影音工具箱" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "ffmpeg_GUI" "\0"
+            VALUE "InternalName", "FFCraft" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.ffmpeggui. All rights reserved." "\0"
-            VALUE "OriginalFilename", "ffmpeg_GUI.exe" "\0"
+            VALUE "OriginalFilename", "FFCraft.exe" "\0"
             VALUE "ProductName", "FFCraft" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

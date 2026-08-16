@@ -8,7 +8,7 @@
 PRODUCT_NAME = FFCraft
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.ffmpeggui.ffmpegGuiFlutter
+PRODUCT_BUNDLE_IDENTIFIER = com.ffmpeggui.ffcraft
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 com.ffmpeggui. All rights reserved.
