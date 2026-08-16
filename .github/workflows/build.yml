@@ -87,7 +87,17 @@ jobs:
           path: artifacts
           pattern: ffcraft-*
           merge-multiple: true
+          if-no-files-found: error
       - name: Create GitHub Release
-        run: gh release create "$GITHUB_REF_NAME" artifacts/* --generate-notes
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "--- artifacts ---"
+          ls -la artifacts
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            echo "Existing release found, deleting it first"
+            gh release delete "$GITHUB_REF_NAME" --yes
+          fi
+          gh release create "$GITHUB_REF_NAME" artifacts/* --generate-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
