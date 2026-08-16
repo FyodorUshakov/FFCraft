@@ -1,9 +1,14 @@
-# FFCraft（Flutter 版）
+# FFCraft
 
 轻量影音工具箱（Built with Flutter）：基于 ffmpeg 的音视频图形化工具，支持音频转码、
-视频转码、无损合流封装、音视频拼接。
-使用 Flutter / Material 3 开发，淡蓝主题并跟随系统自动切换深色 / 浅色，
-全局内嵌 MiSans 字体保证中文渲染粗细均匀；日志使用内嵌 Cascadia Mono 等宽字体。
+视频转码、无损合流封装、音视频拼接。使用 Flutter / Material 3 开发，淡蓝主题并跟随系统
+自动切换深色 / 浅色，全局内嵌 MiSans 字体保证中文渲染粗细均匀；日志使用内嵌
+Cascadia Mono 等宽字体。
+
+A lightweight audio & video toolkit (Built with Flutter) powered by ffmpeg:
+audio/video conversion, lossless muxing, and concatenation — wrapped in a clean
+Material 3 UI with light-blue theming, automatic dark mode, bundled MiSans &
+Cascadia Mono fonts, and 6 UI languages.
 
 支持多语言：简体中文、繁體中文、English、Русский、日本語、한국어，
 在「设置 → 语言」中切换，选择即时生效并自动记忆；「设置 → 关于 FFCraft」可查看
@@ -48,6 +53,43 @@
 2. 程序旁的 `ffmpeg` 文件夹
 3. 系统 PATH（`where` / `which`）
 4. 常见安装位置（如 `/usr/bin`、`/opt/ffmpeg`、`C:\ffmpeg` 等）
+
+## ffmpeg 安装与配置
+
+FFCraft 通过外部调用 ffmpeg 工作，使用前需要先装好 ffmpeg（Windows 为 `ffmpeg.exe`）。
+
+### 下载地址
+
+- **Windows**：[gyan.dev 构建](https://www.gyan.dev/ffmpeg/builds/)（推荐 release-full）
+  或 [BtbN 构建](https://github.com/BtbN/FFmpeg-Builds/releases)
+- **Linux**：优先用系统包管理器（见下），或 [johnvansickle 静态构建](https://johnvansickle.com/ffmpeg/)
+- **macOS**：优先 Homebrew（见下），或 [evermeet 构建](https://evermeet.cx/ffmpeg/)
+
+### Windows
+
+1. 下载 `release-full.7z` 并用 7-Zip 解压
+2. 把解压出的 `bin` 目录加入系统 PATH（例如 `C:\ffmpeg\bin`）
+3. 新开终端验证：`ffmpeg -version`
+
+FFCraft 会通过 PATH 自动找到，也会检查 `C:\ffmpeg`、`E:\ffmpeg` 等常见目录。
+
+### Linux
+
+- Debian / Ubuntu：`sudo apt update && sudo apt install ffmpeg`
+- Fedora / RHEL：`sudo dnf install ffmpeg`
+- Arch：`sudo pacman -S ffmpeg`
+
+装完后 `ffmpeg -version` 验证；程序通过 PATH 自动找到（通常位于 `/usr/bin`）。
+
+### macOS
+
+1. 安装 [Homebrew](https://brew.sh/) 后执行：`brew install ffmpeg`
+2. Apple Silicon 装到 `/opt/homebrew/bin`，Intel 装到 `/usr/local/bin`，通常已在 PATH
+3. 验证：`ffmpeg -version`
+
+程序也会检查 `/opt/homebrew/bin`、`/usr/local/bin` 等常见位置。
+
+> 简便替代：把 ffmpeg 可执行文件放到程序旁边的 `ffmpeg` 文件夹里，程序启动时同样能找到。
 
 ## 开发运行（Windows / Linux / macOS）
 
