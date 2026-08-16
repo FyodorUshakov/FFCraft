@@ -1,0 +1,43 @@
+name: ffmpeg_gui_flutter
+description: "ffmpeg 转换器：音频/视频转码、无损合流与拼接工具"
+publish_to: 'none'
+version: 1.5.0
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  file_picker: ^10.1.7
+  desktop_drop: ^0.5.0
+  shared_preferences: ^2.5.3
+  flex_color_picker: ^3.8.0
+  win32: ^5.15.0
+  ffi: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  fonts:
+    - family: MiSans
+      fonts:
+        - asset: assets/fonts/MiSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/MiSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/MiSans-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/MiSans-Bold.ttf
+          weight: 700
+    - family: CascadiaMono
+      fonts:
+        - asset: assets/fonts/CascadiaMono.ttf
