@@ -1,5 +1,12 @@
 # 更新日志 / Changelog
 
+## [1.6.6] - 2026-08-18
+
+### 修复
+- 硬件编码档位：开启硬件加速后不再直接隐藏档位，改为按编码器提供对应档位
+  （NVENC p1–p7 / QSV veryfast–veryslow / AMF speed–high_quality），
+  默认值与 ffmpeg 一致；VideoToolbox 无档位参数时不显示
+
 ## [1.6.5] - 2026-08-18
 
 ### 变更

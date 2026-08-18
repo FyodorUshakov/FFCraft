@@ -273,6 +273,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hwEncoderHint => '未检测到可用的硬件编码器，请检查显卡驱动或 ffmpeg 是否包含相应模块';
 
   @override
+  String get hwPreset => '硬件档位';
+
+  @override
+  String get hwPresetNvencHint => 'NVENC：p1 最快，p7 质量最佳（默认 p4）';
+
+  @override
+  String get hwPresetQsvHint => 'QSV：veryfast 最快，veryslow 质量最佳（默认 medium）';
+
+  @override
+  String get hwPresetAmfHint => 'AMF：speed 最快，high_quality 质量最佳（默认 balanced）';
+
+  @override
   String get codecCopy => '原样复制';
 
   @override
@@ -972,6 +984,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get hwEncoderHint => '未偵測到可用的硬體編碼器，請檢查顯示卡驅動或 ffmpeg 是否包含相應模組';
+
+  @override
+  String get hwPreset => '硬體檔位';
+
+  @override
+  String get hwPresetNvencHint => 'NVENC：p1 最快，p7 品質最佳（預設 p4）';
+
+  @override
+  String get hwPresetQsvHint => 'QSV：veryfast 最快，veryslow 品質最佳（預設 medium）';
+
+  @override
+  String get hwPresetAmfHint => 'AMF：speed 最快，high_quality 品質最佳（預設 balanced）';
 
   @override
   String get codecCopy => '原樣複製';

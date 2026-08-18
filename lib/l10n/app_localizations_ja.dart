@@ -279,6 +279,18 @@ class AppLocalizationsJa extends AppLocalizations {
       '利用可能なハードウェアエンコーダーが見つかりません。GPU ドライバーや ffmpeg のビルドを確認してください';
 
   @override
+  String get hwPreset => 'ハードウェアプリセット';
+
+  @override
+  String get hwPresetNvencHint => 'NVENC：p1 が最速、p7 が最高品質（既定 p4）';
+
+  @override
+  String get hwPresetQsvHint => 'QSV：veryfast が最速、veryslow が最高品質（既定 medium）';
+
+  @override
+  String get hwPresetAmfHint => 'AMF：speed が最速、high_quality が最高品質（既定 balanced）';
+
+  @override
   String get codecCopy => 'そのままコピー';
 
   @override

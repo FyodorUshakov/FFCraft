@@ -609,6 +609,30 @@ abstract class AppLocalizations {
   /// **'未检测到可用的硬件编码器，请检查显卡驱动或 ffmpeg 是否包含相应模块'**
   String get hwEncoderHint;
 
+  /// No description provided for @hwPreset.
+  ///
+  /// In zh, this message translates to:
+  /// **'硬件档位'**
+  String get hwPreset;
+
+  /// No description provided for @hwPresetNvencHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'NVENC：p1 最快，p7 质量最佳（默认 p4）'**
+  String get hwPresetNvencHint;
+
+  /// No description provided for @hwPresetQsvHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'QSV：veryfast 最快，veryslow 质量最佳（默认 medium）'**
+  String get hwPresetQsvHint;
+
+  /// No description provided for @hwPresetAmfHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'AMF：speed 最快，high_quality 质量最佳（默认 balanced）'**
+  String get hwPresetAmfHint;
+
   /// No description provided for @codecCopy.
   ///
   /// In zh, this message translates to:

@@ -64,9 +64,11 @@ class VideoForm extends StatelessWidget {
         s.hwAccel = true;
         // 硬件编码器始终默认选中候选列表中的第一个
         s.hwEncoder = cands.first;
+        s.hwPreset = defaultHwPreset(cands.first);
       } else {
         s.hwAccel = false;
         s.hwEncoder = '';
+        s.hwPreset = '';
       }
     });
   }
@@ -121,9 +123,11 @@ class VideoForm extends StatelessWidget {
                         x.hwAccel = true;
                         // 重新开启时同样默认选中列表第一个
                         x.hwEncoder = cands.first;
+                        x.hwPreset = defaultHwPreset(cands.first);
                       } else {
                         x.hwAccel = false;
                         x.hwEncoder = '';
+                        x.hwPreset = '';
                       }
                     }),
             ),
@@ -136,9 +140,26 @@ class VideoForm extends StatelessWidget {
                 items: [
                   for (final e in _hwCandidatesFor(s.codec)) (e, e),
                 ],
-                onChanged: (v) =>
-                    controller.updateVideo((x) => x.hwEncoder = v),
+                onChanged: (v) => controller.updateVideo((x) {
+                  x.hwEncoder = v;
+                  x.hwPreset = defaultHwPreset(v);
+                }),
               ),
+              if (hwPresetsFor(s.hwEncoder).isNotEmpty) ...[
+                const SizedBox(height: 8),
+                _DropdownField(
+                  label: l10n.hwPreset,
+                  value: hwPresetsFor(s.hwEncoder).contains(s.hwPreset)
+                      ? s.hwPreset
+                      : defaultHwPreset(s.hwEncoder),
+                  hint: _hwPresetHint(l10n, s.hwEncoder),
+                  items: [
+                    for (final p in hwPresetsFor(s.hwEncoder)) (p, p),
+                  ],
+                  onChanged: (v) =>
+                      controller.updateVideo((x) => x.hwPreset = v),
+                ),
+              ],
             ],
             const SizedBox(height: 12),
             _DropdownField(
@@ -419,6 +440,13 @@ class VideoForm extends StatelessWidget {
       default:
         return p;
     }
+  }
+
+  static String? _hwPresetHint(AppLocalizations l10n, String encoder) {
+    if (encoder.contains('nvenc')) return l10n.hwPresetNvencHint;
+    if (encoder.contains('qsv')) return l10n.hwPresetQsvHint;
+    if (encoder.contains('amf')) return l10n.hwPresetAmfHint;
+    return null;
   }
 
   static String _bitrateModeLabel(AppLocalizations l10n, VideoBitrateMode m) =>

@@ -291,6 +291,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'No hardware encoders detected; check your GPU driver or whether ffmpeg includes the required modules';
 
   @override
+  String get hwPreset => 'Hardware preset';
+
+  @override
+  String get hwPresetNvencHint =>
+      'NVENC: p1 fastest, p7 best quality (default p4)';
+
+  @override
+  String get hwPresetQsvHint =>
+      'QSV: veryfast fastest, veryslow best quality (default medium)';
+
+  @override
+  String get hwPresetAmfHint =>
+      'AMF: speed fastest, high_quality best quality (default balanced)';
+
+  @override
   String get codecCopy => 'Copy as-is';
 
   @override

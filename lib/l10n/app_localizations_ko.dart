@@ -281,6 +281,20 @@ class AppLocalizationsKo extends AppLocalizations {
       '사용 가능한 하드웨어 인코더가 없습니다. GPU 드라이버 또는 ffmpeg 빌드를 확인하세요';
 
   @override
+  String get hwPreset => '하드웨어 프리셋';
+
+  @override
+  String get hwPresetNvencHint => 'NVENC: p1 가장 빠름, p7 최고 품질 (기본 p4)';
+
+  @override
+  String get hwPresetQsvHint =>
+      'QSV: veryfast 가장 빠름, veryslow 최고 품질 (기본 medium)';
+
+  @override
+  String get hwPresetAmfHint =>
+      'AMF: speed 가장 빠름, high_quality 최고 품질 (기본 balanced)';
+
+  @override
   String get codecCopy => '그대로 복사';
 
   @override

@@ -291,6 +291,21 @@ class AppLocalizationsRu extends AppLocalizations {
       'Аппаратные кодировщики не найдены; проверьте драйвер GPU или сборку ffmpeg';
 
   @override
+  String get hwPreset => 'Пресет аппаратного кодирования';
+
+  @override
+  String get hwPresetNvencHint =>
+      'NVENC: p1 — быстрее всего, p7 — лучшее качество (по умолчанию p4)';
+
+  @override
+  String get hwPresetQsvHint =>
+      'QSV: veryfast — быстрее всего, veryslow — лучшее качество (по умолчанию medium)';
+
+  @override
+  String get hwPresetAmfHint =>
+      'AMF: speed — быстрее всего, high_quality — лучшее качество (по умолчанию balanced)';
+
+  @override
   String get codecCopy => 'Как есть';
 
   @override

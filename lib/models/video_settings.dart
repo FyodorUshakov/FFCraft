@@ -77,6 +77,7 @@ class VideoSettings {
   bool pixCompat; // yuv420p 兼容模式
   bool hwAccel; // 硬件加速
   String hwEncoder; // 如 h264_nvenc
+  String hwPreset; // 硬件档位：NVENC p1-p7 / QSV veryfast-veryslow / AMF speed-high_quality
 
   VideoSettings({
     this.codec = VideoCodec.h264,
@@ -94,6 +95,7 @@ class VideoSettings {
     this.pixCompat = true,
     this.hwAccel = false,
     this.hwEncoder = '',
+    this.hwPreset = 'p4',
   });
 
   factory VideoSettings.fromJson(Map<String, dynamic> json) {
@@ -117,6 +119,7 @@ class VideoSettings {
       pixCompat: json['pixCompat'] as bool? ?? true,
       hwAccel: json['hwAccel'] as bool? ?? false,
       hwEncoder: json['hwEncoder'] as String? ?? '',
+      hwPreset: json['hwPreset'] as String? ?? 'p4',
     );
   }
 
@@ -136,6 +139,7 @@ class VideoSettings {
         'pixCompat': pixCompat,
         'hwAccel': hwAccel,
         'hwEncoder': hwEncoder,
+        'hwPreset': hwPreset,
       };
 
   String encode() => jsonEncode(toJson());
@@ -191,6 +195,16 @@ class VideoSettings {
     if (codec != VideoCodec.copy) {
       if (usingHw) {
         args.addAll(['-c:v', hwEncoder]);
+        final hwPresets = hwPresetsFor(hwEncoder);
+        if (hwPresets.isNotEmpty &&
+            hwPreset.isNotEmpty &&
+            hwPresets.contains(hwPreset)) {
+          if (hwEncoder.contains('amf')) {
+            args.addAll(['-quality', hwPreset]);
+          } else {
+            args.addAll(['-preset', hwPreset]);
+          }
+        }
       } else {
         args.addAll(['-c:v', codec.ffmpegName]);
         final presetList = presetsFor(codec);
@@ -313,4 +327,28 @@ List<String> presetsFor(VideoCodec codec) {
     default:
       return const [];
   }
+}
+
+/// 硬件编码器支持的档位；VideoToolbox 无档位参数，返回空列表。
+List<String> hwPresetsFor(String hwEncoder) {
+  if (hwEncoder.contains('nvenc')) {
+    return const ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7'];
+  }
+  if (hwEncoder.contains('qsv')) {
+    return const [
+      'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow',
+    ];
+  }
+  if (hwEncoder.contains('amf')) {
+    return const ['speed', 'balanced', 'quality', 'high_quality'];
+  }
+  return const [];
+}
+
+/// 硬件编码器档位的默认值（与 ffmpeg 默认一致）。
+String defaultHwPreset(String hwEncoder) {
+  if (hwEncoder.contains('nvenc')) return 'p4';
+  if (hwEncoder.contains('qsv')) return 'medium';
+  if (hwEncoder.contains('amf')) return 'balanced';
+  return '';
 }
