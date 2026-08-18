@@ -270,6 +270,10 @@ class AppLocalizationsRu extends AppLocalizations {
       'Контейнеры OGG/Opus/WAV не поддерживают встроенные обложки — при конвертации обложка будет пропущена';
 
   @override
+  String get opusMonoClamp =>
+      'Обнаружен моно-источник; битрейт Opus автоматически снижен до 256 кбит/с (предел для моно)';
+
+  @override
   String get decodeTailInfo =>
       'Вывод полный и нормально воспроизводится; дополнительные данные в конце исходного файла (часто бывают во FLAC, скачанных из NetEase Cloud Music) были проигнорированы';
 

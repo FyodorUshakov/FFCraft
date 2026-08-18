@@ -573,6 +573,12 @@ abstract class AppLocalizations {
   /// **'OGG/Opus/WAV 容器不支持内嵌封面，转换时封面将被忽略'**
   String get coverNotSupportedHint;
 
+  /// No description provided for @opusMonoClamp.
+  ///
+  /// In zh, this message translates to:
+  /// **'检测到单声道音源，Opus 码率已自动调整为 256 kbps（单声道上限）'**
+  String get opusMonoClamp;
+
   /// No description provided for @decodeTailInfo.
   ///
   /// In zh, this message translates to:

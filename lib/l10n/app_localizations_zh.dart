@@ -255,6 +255,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get coverNotSupportedHint => 'OGG/Opus/WAV 容器不支持内嵌封面，转换时封面将被忽略';
 
   @override
+  String get opusMonoClamp => '检测到单声道音源，Opus 码率已自动调整为 256 kbps（单声道上限）';
+
+  @override
   String get decodeTailInfo => '输出完整可正常播放；源文件尾部附加数据（常见于网易云下载的 FLAC）已忽略';
 
   @override
@@ -966,6 +969,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get coverNotSupportedHint => 'OGG/Opus/WAV 容器不支援內嵌封面，轉換時封面將被忽略';
+
+  @override
+  String get opusMonoClamp => '偵測到單聲道音源，Opus 碼率已自動調整為 256 kbps（單聲道上限）';
 
   @override
   String get decodeTailInfo => '輸出完整可正常播放；來源檔案尾部附加資料（常見於網易雲下載的 FLAC）已忽略';

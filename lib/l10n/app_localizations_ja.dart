@@ -258,6 +258,10 @@ class AppLocalizationsJa extends AppLocalizations {
       'OGG/Opus/WAV コンテナは埋め込みカバーアートに対応していないため、変換時にカバーは省略されます';
 
   @override
+  String get opusMonoClamp =>
+      'モノラル音源を検出したため、Opus ビットレートを 256 kbps（モノラル上限）に自動調整しました';
+
+  @override
   String get decodeTailInfo =>
       '出力は完全で再生に問題ありません。ソースファイル末尾の付加データ（NetEase Cloud Music の FLAC ダウンロードに多く見られる）は無視されました';
 

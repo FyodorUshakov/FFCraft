@@ -647,13 +647,31 @@ class AppController extends ChangeNotifier {
 
     final args = job.args;
 
-    // 探测时长（用于进度百分比）
-    double? duration;
-    if (job.input.isNotEmpty) {
-      duration = await MediaProbe.duration(engineDir, job.input);
-    }
+    // 探测媒体信息：时长用于进度百分比，声道数用于 Opus 码率钳制
+    final media = job.input.isNotEmpty
+        ? await MediaProbe.info(engineDir, job.input)
+        : null;
+    final duration = media?.durationSec;
 
     final runArgs = ['-nostats', '-progress', 'pipe:1', ...args];
+    // 单声道 Opus：libopus 每声道上限 256kbps，超限会直接失败，提前钳制
+    final bIdx = runArgs.indexOf('-b:a');
+    if (bIdx >= 0 &&
+        bIdx + 1 < runArgs.length &&
+        runArgs.contains('libopus')) {
+      final kbps = int.tryParse(runArgs[bIdx + 1].replaceAll('k', ''));
+      final clamped = kbps == null
+          ? null
+          : AudioSettings.opusClampForChannels(kbps, media?.channels);
+      if (clamped != null) {
+        runArgs[bIdx + 1] = '${clamped}k';
+        addLog(l10n(
+          (a) => a.opusMonoClamp,
+          '⚠ 检测到单声道音源，Opus 码率 ${kbps}kbps 超出 256kbps 上限，'
+              '已自动调整为 ${clamped}kbps',
+        ));
+      }
+    }
     addLog('▶ ffmpeg ${runArgs.join(' ')}');
     var sawError = false;
     Process? proc;

@@ -117,6 +117,17 @@ class AudioSettings {
     }
   }
 
+  /// libopus 单声道码率上限（每声道最大 256 kbps）。
+  static const int opusMonoMaxKbps = 256;
+
+  /// 单声道 Opus 码率钳制：超过上限返回上限值，否则返回 null。
+  /// [channels] 来自 ffmpeg 探测（mono / 1 / stereo / 5.1(side)…）。
+  static int? opusClampForChannels(int bitrateKbps, String? channels) {
+    final mono = channels == 'mono' || channels == '1';
+    if (!mono || bitrateKbps <= opusMonoMaxKbps) return null;
+    return opusMonoMaxKbps;
+  }
+
   String get outputExt => codec.outputExt;
 
   String outputPathFor(String input, String outDir) {

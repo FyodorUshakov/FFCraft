@@ -260,6 +260,10 @@ class AppLocalizationsKo extends AppLocalizations {
       'OGG/Opus/WAV 컨테이너는 포함된 표지 이미지를 지원하지 않아 변환 시 표지가 제외됩니다';
 
   @override
+  String get opusMonoClamp =>
+      '모노 음원 감지, Opus 비트레이트를 256 kbps(모노 상한)로 자동 조정했습니다';
+
+  @override
   String get decodeTailInfo =>
       '출력이 완전하며 재생에 문제없습니다. 소스 파일 끝의 부가 데이터(NetEase Cloud Music에서 다운로드한 FLAC에서 흔함)는 무시되었습니다';
 

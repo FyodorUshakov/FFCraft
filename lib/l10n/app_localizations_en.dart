@@ -270,6 +270,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'OGG, Opus and WAV containers do not support embedded cover art; the cover will be omitted';
 
   @override
+  String get opusMonoClamp =>
+      'Mono source detected; Opus bitrate adjusted to 256 kbps (mono limit)';
+
+  @override
   String get decodeTailInfo =>
       'Output is complete and playable; extra data at the end of the source file (common in NetEase Cloud Music FLAC downloads) was ignored';
 

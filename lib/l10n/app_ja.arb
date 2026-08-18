@@ -82,6 +82,7 @@
   "vbrQuality": "VBR 品質",
   "qualityRangeHint": "値が小さいほど品質が高くファイルは大きくなり、大きいほどファイルは小さくなります（範囲 {range}）",
   "coverNotSupportedHint": "OGG/Opus/WAV コンテナは埋め込みカバーアートに対応していないため、変換時にカバーは省略されます",
+  "opusMonoClamp": "モノラル音源を検出したため、Opus ビットレートを 256 kbps（モノラル上限）に自動調整しました",
   "decodeTailInfo": "出力は完全で再生に問題ありません。ソースファイル末尾の付加データ（NetEase Cloud Music の FLAC ダウンロードに多く見られる）は無視されました",
   "@qualityRangeHint": {"placeholders": {"range": {"type": "String"}}},
   "videoCodec": "動画コーデック",
