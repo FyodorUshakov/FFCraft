@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'app_mode.dart';
 
+/// 拼接工作模式。
+enum ConcatKind { video, audio }
+
 /// 拼接输出容器。
 enum ConcatContainer { auto, mp4, mkv, mov, webm, ts }
 
@@ -20,16 +23,19 @@ extension ConcatContainerX on ConcatContainer {
 
 /// 音视频拼接参数。
 class ConcatSettings {
+  ConcatKind kind; // 视频拼接 / 音频拼接
   ConcatContainer container;
   bool reEncode; // 兼容模式：重新编码拼接
 
   ConcatSettings({
+    this.kind = ConcatKind.video,
     this.container = ConcatContainer.auto,
     this.reEncode = false,
   });
 
   factory ConcatSettings.fromJson(Map<String, dynamic> json) {
     return ConcatSettings(
+      kind: ConcatKind.values.asNameMap()[json['kind']] ?? ConcatKind.video,
       container: ConcatContainer.values.asNameMap()[json['container']] ??
           ConcatContainer.auto,
       reEncode: json['reEncode'] as bool? ?? false,
@@ -37,6 +43,7 @@ class ConcatSettings {
   }
 
   Map<String, dynamic> toJson() => {
+        'kind': kind.name,
         'container': container.name,
         'reEncode': reEncode,
       };
@@ -56,6 +63,14 @@ class ConcatSettings {
     final name = first.split(RegExp(r'[\\/]')).last;
     final dot = name.lastIndexOf('.');
     final stem = dot > 0 ? name.substring(0, dot) : name;
+    if (kind == ConcatKind.audio) {
+      final src = extensionOf(first);
+      // 兼容模式统一输出 WAV；复制模式沿用源音频扩展名
+      final ext = reEncode
+          ? 'wav'
+          : (audioExtensions.contains(src) ? src : 'm4a');
+      return safeOutputPath(outDir, first, '${stem}_concat', ext);
+    }
     String ext;
     final c = container.ext;
     if (c != null) {
@@ -85,7 +100,16 @@ class ConcatSettings {
         args.addAll(['-i', p]);
       }
       final n = inputs.length;
-      if (videoSource) {
+      if (kind == ConcatKind.audio) {
+        // 音频拼接：各段统一转码为 WAV 后拼接
+        args.addAll([
+          '-filter_complex',
+          '[0:a]${List.generate(n - 1, (i) => '[${i + 1}:a]').join()}'
+              'concat=n=$n:v=0:a=1[a]',
+          '-map', '[a]',
+          '-c:a', 'pcm_s16le',
+        ]);
+      } else if (videoSource) {
         final w = targetResolution?.$1;
         final h = targetResolution?.$2;
         if (w != null && h != null) {

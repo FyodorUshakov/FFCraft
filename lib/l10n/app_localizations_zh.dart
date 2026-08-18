@@ -455,6 +455,22 @@ class AppLocalizationsZh extends AppLocalizations {
   String get compatReencodeHint => '各段编码或参数不一致时，重新编码为 H.265 + AAC 后再拼接';
 
   @override
+  String get concatKindVideo => '视频拼接';
+
+  @override
+  String get concatKindAudio => '音频拼接';
+
+  @override
+  String get concatAudioInfoCopy =>
+      '音频拼接默认直接复制音频流；各段参数不一致或拼接失败时，请开启兼容模式（输出 WAV）';
+
+  @override
+  String get concatAudioInfoReencode => '兼容模式：各段转码为 WAV 后拼接，可兼容不同编码、采样率与声道的音源';
+
+  @override
+  String get compatReencodeAudioHint => '各段转码为 WAV（PCM）后拼接，兼容参数不一致的音源';
+
+  @override
   String get concatInfoCopy =>
       '复制模式（默认）直接拼接，不重编码、速度快、质量无损；要求各片段的编码、采样率、帧率等参数完全一致。';
 
@@ -1169,6 +1185,22 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get compatReencodeHint => '各段編碼或參數不一致時，重新編碼為 H.265 + AAC 後再串接';
+
+  @override
+  String get concatKindVideo => '影片拼接';
+
+  @override
+  String get concatKindAudio => '音訊拼接';
+
+  @override
+  String get concatAudioInfoCopy =>
+      '音訊拼接預設直接複製音訊串流；各段參數不一致或串接失敗時，請開啟相容模式（輸出 WAV）';
+
+  @override
+  String get concatAudioInfoReencode => '相容模式：各段轉碼為 WAV 後串接，可相容不同編碼、取樣率與聲道的音源';
+
+  @override
+  String get compatReencodeAudioHint => '各段轉碼為 WAV（PCM）後串接，相容參數不一致的音源';
 
   @override
   String get concatInfoCopy =>

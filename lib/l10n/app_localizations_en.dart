@@ -484,6 +484,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'When segments differ in codec or settings, re-encode to H.265 + AAC before joining';
 
   @override
+  String get concatKindVideo => 'Video';
+
+  @override
+  String get concatKindAudio => 'Audio';
+
+  @override
+  String get concatAudioInfoCopy =>
+      'Audio join copies audio streams by default; if segments differ or the join fails, enable compatibility mode (outputs WAV)';
+
+  @override
+  String get concatAudioInfoReencode =>
+      'Compatibility mode: re-encode segments to WAV before joining; handles mixed codecs, sample rates and channels';
+
+  @override
+  String get compatReencodeAudioHint =>
+      'Re-encode each segment to WAV (PCM) before joining for mixed settings';
+
+  @override
   String get concatInfoCopy =>
       'Copy mode (default) joins directly without re-encoding: fast and lossless, but all segments must match in codec, sample rate, frame rate, etc.';
 

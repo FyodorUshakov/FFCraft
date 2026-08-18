@@ -463,6 +463,7 @@ class AppController extends ChangeNotifier {
     // 兼容模式（视频）：探测各段分辨率，取最高者作为统一输出分辨率
     (int, int)? concatTarget;
     if (mode == AppMode.concat &&
+        concat.kind == ConcatKind.video &&
         concat.reEncode &&
         items.isNotEmpty &&
         isVideoExtension(items.first.path)) {

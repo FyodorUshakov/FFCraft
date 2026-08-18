@@ -963,6 +963,36 @@ abstract class AppLocalizations {
   /// **'各段编码或参数不一致时，重新编码为 H.265 + AAC 后再拼接'**
   String get compatReencodeHint;
 
+  /// No description provided for @concatKindVideo.
+  ///
+  /// In zh, this message translates to:
+  /// **'视频拼接'**
+  String get concatKindVideo;
+
+  /// No description provided for @concatKindAudio.
+  ///
+  /// In zh, this message translates to:
+  /// **'音频拼接'**
+  String get concatKindAudio;
+
+  /// No description provided for @concatAudioInfoCopy.
+  ///
+  /// In zh, this message translates to:
+  /// **'音频拼接默认直接复制音频流；各段参数不一致或拼接失败时，请开启兼容模式（输出 WAV）'**
+  String get concatAudioInfoCopy;
+
+  /// No description provided for @concatAudioInfoReencode.
+  ///
+  /// In zh, this message translates to:
+  /// **'兼容模式：各段转码为 WAV 后拼接，可兼容不同编码、采样率与声道的音源'**
+  String get concatAudioInfoReencode;
+
+  /// No description provided for @compatReencodeAudioHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'各段转码为 WAV（PCM）后拼接，兼容参数不一致的音源'**
+  String get compatReencodeAudioHint;
+
   /// No description provided for @concatInfoCopy.
   ///
   /// In zh, this message translates to:

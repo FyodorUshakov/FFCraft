@@ -464,6 +464,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get compatReencodeHint => 'コーデックや設定が異なる場合、H.265 + AAC に再エンコードしてから結合';
 
   @override
+  String get concatKindVideo => '動画結合';
+
+  @override
+  String get concatKindAudio => '音声結合';
+
+  @override
+  String get concatAudioInfoCopy =>
+      '音声結合は既定で音声ストリームを直接コピーします。セグメントの設定が異なる場合や結合に失敗する場合は互換モード（WAV出力）を有効にしてください';
+
+  @override
+  String get concatAudioInfoReencode =>
+      '互換モード：各セグメントを WAV に変換してから結合。コーデック・サンプルレート・チャンネルが異なっても対応';
+
+  @override
+  String get compatReencodeAudioHint =>
+      '各セグメントを WAV（PCM）に変換してから結合し、設定が異なる音源に対応';
+
+  @override
   String get concatInfoCopy =>
       'コピーモード（既定）は再エンコードせず直接結合：高速・無劣化。ただし全セグメントのコーデック・サンプリングレート・フレームレートなどを揃える必要があります';
 

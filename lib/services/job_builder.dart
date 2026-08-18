@@ -76,6 +76,9 @@ class JobBuilder {
     final first = inputs.first;
     final dir = _dirFor(outDir, first);
     final videoSource = isVideoExtension(first);
+    final kindLabel = s.kind == ConcatKind.audio
+        ? l10n((a) => a.concatKindAudio, '音频拼接')
+        : l10n((a) => a.concatKindVideo, '视频拼接');
     return _makeJob(
       s.buildArgs(
         inputs,
@@ -85,7 +88,7 @@ class JobBuilder {
         targetResolution: targetResolution,
       ),
       s.outputPathFor(inputs, dir),
-      '${modeLabel(AppMode.concat)} ${inputs.length}',
+      '$kindLabel ${inputs.length}',
       first,
     );
   }

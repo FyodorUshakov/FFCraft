@@ -20,34 +20,39 @@ class ConcatForm extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SectionLabel(l10n.outputContainer),
-          DropdownButtonFormField<String>(
-            key: ValueKey('concat-${s.container.name}'),
-            initialValue: s.container.name,
-            isExpanded: true,
-            items: [
-              for (final c in ConcatContainer.values)
-                DropdownMenuItem(
-                  value: c.name,
-                  child: Text(
-                    c == ConcatContainer.auto
-                        ? l10n.autoContainer
-                        : c.label,
+          if (s.kind == ConcatKind.video) ...[
+            SectionLabel(l10n.outputContainer),
+            DropdownButtonFormField<String>(
+              key: ValueKey('concat-${s.container.name}'),
+              initialValue: s.container.name,
+              isExpanded: true,
+              items: [
+                for (final c in ConcatContainer.values)
+                  DropdownMenuItem(
+                    value: c.name,
+                    child: Text(
+                      c == ConcatContainer.auto
+                          ? l10n.autoContainer
+                          : c.label,
+                    ),
                   ),
-                ),
-            ],
-            onChanged: (v) {
-              if (v == null) return;
-              controller.updateConcat(
-                (x) => x.container =
-                    ConcatContainer.values.asNameMap()[v] ?? ConcatContainer.auto,
-              );
-            },
-          ),
-          const SizedBox(height: 8),
+              ],
+              onChanged: (v) {
+                if (v == null) return;
+                controller.updateConcat(
+                  (x) => x.container =
+                      ConcatContainer.values.asNameMap()[v] ??
+                          ConcatContainer.auto,
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+          ],
           SwitchRow(
             title: l10n.compatReencode,
-            subtitle: l10n.compatReencodeHint,
+            subtitle: s.kind == ConcatKind.audio
+                ? l10n.compatReencodeAudioHint
+                : l10n.compatReencodeHint,
             value: s.reEncode,
             onChanged: (v) => controller.updateConcat((x) => x.reEncode = v),
           ),
@@ -66,8 +71,12 @@ class ConcatForm extends StatelessWidget {
                 Expanded(
                   child: Text(
                     s.reEncode
-                        ? l10n.concatInfoReencode
-                        : l10n.concatInfoCopy,
+                        ? (s.kind == ConcatKind.audio
+                            ? l10n.concatAudioInfoReencode
+                            : l10n.concatInfoReencode)
+                        : (s.kind == ConcatKind.audio
+                            ? l10n.concatAudioInfoCopy
+                            : l10n.concatInfoCopy),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),

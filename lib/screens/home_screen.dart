@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n_helper.dart';
 import '../models/app_mode.dart';
+import '../models/concat_settings.dart';
 import '../state/app_controller.dart';
 import '../widgets/bottom_bar.dart';
 import '../widgets/engine_dialog.dart';
@@ -247,6 +248,34 @@ class _SettingsCard extends StatelessWidget {
                         ?.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
+                if (controller.mode == AppMode.concat) ...[
+                  const SizedBox(width: 8),
+                  SegmentedButton<ConcatKind>(
+                    segments: [
+                      ButtonSegment(
+                        value: ConcatKind.video,
+                        label: Text(l10n.concatKindVideo),
+                      ),
+                      ButtonSegment(
+                        value: ConcatKind.audio,
+                        label: Text(l10n.concatKindAudio),
+                      ),
+                    ],
+                    selected: {controller.concat.kind},
+                    onSelectionChanged: (v) =>
+                        controller.updateConcat((x) => x.kind = v.first),
+                    showSelectedIcon: false,
+                    style: const ButtonStyle(
+                      visualDensity: VisualDensity.compact,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      textStyle:
+                          WidgetStatePropertyAll(TextStyle(fontSize: 12)),
+                      padding: WidgetStatePropertyAll(
+                        EdgeInsets.symmetric(horizontal: 8),
+                      ),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),

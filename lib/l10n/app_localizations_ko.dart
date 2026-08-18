@@ -468,6 +468,24 @@ class AppLocalizationsKo extends AppLocalizations {
   String get compatReencodeHint => '코덱이나 설정이 다르면 H.265 + AAC로 재인코딩한 뒤 연결';
 
   @override
+  String get concatKindVideo => '동영상 연결';
+
+  @override
+  String get concatKindAudio => '오디오 연결';
+
+  @override
+  String get concatAudioInfoCopy =>
+      '오디오 연결은 기본적으로 오디오 스트림을 그대로 복사합니다. 구간 설정이 다르거나 연결에 실패하면 호환 모드(WAV 출력)를 켜세요';
+
+  @override
+  String get concatAudioInfoReencode =>
+      '호환 모드: 각 구간을 WAV로 변환한 뒤 연결해 코덱·샘플레이트·채널이 달라도 대응';
+
+  @override
+  String get compatReencodeAudioHint =>
+      '각 구간을 WAV(PCM)로 변환한 뒤 연결해 설정이 다른 음원에 대응';
+
+  @override
   String get concatInfoCopy =>
       '복사 모드（기본）는 재인코딩 없이 직접 연결합니다: 빠르고 무손실이지만 모든 구간의 코덱·샘플 레이트·프레임 레이트 등이 같아야 합니다.';
 

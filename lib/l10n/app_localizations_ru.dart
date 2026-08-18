@@ -484,6 +484,24 @@ class AppLocalizationsRu extends AppLocalizations {
       'Если сегменты различаются кодеком или параметрами, перед склейкой выполняется перекодирование в H.265 + AAC';
 
   @override
+  String get concatKindVideo => 'Склейка видео';
+
+  @override
+  String get concatKindAudio => 'Склейка аудио';
+
+  @override
+  String get concatAudioInfoCopy =>
+      'Склейка аудио по умолчанию копирует аудиопотоки; если сегменты различаются или склейка не удалась, включите режим совместимости (вывод WAV)';
+
+  @override
+  String get concatAudioInfoReencode =>
+      'Режим совместимости: сегменты перекодируются в WAV перед склейкой — работает при разных кодеках, частотах и каналах';
+
+  @override
+  String get compatReencodeAudioHint =>
+      'Перекодировать каждый сегмент в WAV (PCM) перед склейкой для разных параметров';
+
+  @override
   String get concatInfoCopy =>
       'Режим копирования (по умолчанию) склеивает напрямую без перекодирования: быстро и без потерь, но сегменты должны совпадать по кодеку, частоте дискретизации, кадрам и т.д.';
 
