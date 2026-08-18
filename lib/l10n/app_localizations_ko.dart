@@ -699,11 +699,11 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String engineDirMissing(String dir) {
-    return '지정한 폴더에서 ffmpeg.exe를 찾을 수 없습니다: $dir';
+    return '지정한 폴더에서 ffmpeg를 찾을 수 없습니다: $dir';
   }
 
   @override
-  String get engineNotFound => 'ffmpeg.exe를 찾을 수 없습니다. 설정에서 폴더를 수동 지정하세요';
+  String get engineNotFound => 'ffmpeg를 찾을 수 없습니다. 설정에서 폴더를 수동 지정하세요';
 
   @override
   String launchFailed(String err) {

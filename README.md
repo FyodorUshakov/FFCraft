@@ -117,7 +117,7 @@ Windows / Linux / macOS 三平台执行分析、测试与 Release 构建，并�
 | 产物 | 说明 |
 | --- | --- |
 | `FFCraft\` | 便携目录，拷走即用 |
-| `FFCraft_v1.6.2_portable.zip` | 便携版压缩包，解压后双击 `FFCraft.exe` 即可 |
+| `FFCraft_v1.6.3_portable.zip` | 便携版压缩包，解压后双击 `FFCraft.exe` 即可 |
 
 ## 许可
 

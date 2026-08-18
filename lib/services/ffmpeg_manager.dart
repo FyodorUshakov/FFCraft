@@ -15,8 +15,11 @@ class FfmpegManager {
   /// Windows 下为 ffmpeg.exe，Linux/macOS 下为 ffmpeg。
   static String get exeName => Platform.isWindows ? 'ffmpeg.exe' : 'ffmpeg';
 
+  /// 给定目录下的 ffmpeg 可执行文件全路径（同时区分平台的文件名与分隔符）。
+  static String exePath(String dir) => '$dir${Platform.pathSeparator}$exeName';
+
   static String? _exeOf(String dir) {
-    final d = '$dir${Platform.pathSeparator}$exeName';
+    final d = exePath(dir);
     return File(d).existsSync() ? dir : null;
   }
 

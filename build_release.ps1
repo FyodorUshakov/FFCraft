@@ -8,7 +8,7 @@ $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
 $dist = Join-Path $root 'dist'
 $appDir = Join-Path $dist 'FFCraft'
-$version = 'v1.6.2'
+$version = 'v1.6.3'
 
 Write-Host '==> 1/3 flutter build windows --release'
 Push-Location $root

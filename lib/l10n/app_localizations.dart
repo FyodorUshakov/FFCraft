@@ -1380,13 +1380,13 @@ abstract class AppLocalizations {
   /// No description provided for @engineDirMissing.
   ///
   /// In zh, this message translates to:
-  /// **'指定目录中未找到 ffmpeg.exe：{dir}'**
+  /// **'指定目录中未找到 ffmpeg：{dir}'**
   String engineDirMissing(String dir);
 
   /// No description provided for @engineNotFound.
   ///
   /// In zh, this message translates to:
-  /// **'未找到 ffmpeg.exe，请在设置中手动指定 ffmpeg 所在目录'**
+  /// **'未找到 ffmpeg，请在设置中手动指定 ffmpeg 所在目录'**
   String get engineNotFound;
 
   /// No description provided for @launchFailed.

@@ -688,11 +688,11 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String engineDirMissing(String dir) {
-    return '指定目录中未找到 ffmpeg.exe：$dir';
+    return '指定目录中未找到 ffmpeg：$dir';
   }
 
   @override
-  String get engineNotFound => '未找到 ffmpeg.exe，请在设置中手动指定 ffmpeg 所在目录';
+  String get engineNotFound => '未找到 ffmpeg，请在设置中手动指定 ffmpeg 所在目录';
 
   @override
   String launchFailed(String err) {
@@ -1389,11 +1389,11 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String engineDirMissing(String dir) {
-    return '指定資料夾中找不到 ffmpeg.exe：$dir';
+    return '指定資料夾中找不到 ffmpeg：$dir';
   }
 
   @override
-  String get engineNotFound => '找不到 ffmpeg.exe，請在設定中手動指定 ffmpeg 所在資料夾';
+  String get engineNotFound => '找不到 ffmpeg，請在設定中手動指定 ffmpeg 所在資料夾';
 
   @override
   String launchFailed(String err) {

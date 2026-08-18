@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'ffmpeg_manager.dart';
+
 /// 解析 ffmpeg -i 输出得到的媒体信息。
 class MediaInfo {
   final double? durationSec;
@@ -93,7 +95,7 @@ class MediaProbe {
   static Future<MediaInfo?> info(String ffmpegDir, String input) async {
     try {
       final proc = await Process.start(
-        '$ffmpegDir${Platform.pathSeparator}ffmpeg.exe',
+        FfmpegManager.exePath(ffmpegDir),
         ['-hide_banner', '-i', input],
         workingDirectory: ffmpegDir,
         includeParentEnvironment: true,

@@ -697,11 +697,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String engineDirMissing(String dir) {
-    return '指定したフォルダーに ffmpeg.exe がありません：$dir';
+    return '指定したフォルダーに ffmpeg が見つかりません：$dir';
   }
 
   @override
-  String get engineNotFound => 'ffmpeg.exe が見つかりません。設定でフォルダーを手動指定してください';
+  String get engineNotFound => 'ffmpeg が見つかりません。設定でフォルダーを手動指定してください';
 
   @override
   String launchFailed(String err) {

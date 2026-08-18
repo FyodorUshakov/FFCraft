@@ -1,5 +1,14 @@
 # 更新日志 / Changelog
 
+## [1.6.3] - 2026-08-18
+
+### 修复
+- 修复 Linux/macOS 下转码失败：探测已正确找到不带扩展名的 ffmpeg，
+  但启动与时长探测仍硬编码 `ffmpeg.exe`，现已统一按平台使用可执行文件名
+- 壁纸取色统一使用 `WallpaperColor.supported` 判断（该功能依赖 Win32 API，
+  仅 Windows 可用），非 Windows 平台提示并禁用按钮
+- 未找到 ffmpeg 的错误提示不再固定写 `ffmpeg.exe`，改为平台中性的描述
+
 ## [1.6.2] - 2026-08-16
 
 ### 修复

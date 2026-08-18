@@ -1,10 +1,9 @@
-﻿import 'dart:io';
-
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n_helper.dart';
 import '../models/theme_settings.dart';
+import '../services/wallpaper_color.dart';
 import '../state/app_controller.dart';
 
 /// 配色方案设置：预设色板 / 跟随壁纸 / 自定义颜色。
@@ -183,7 +182,7 @@ class ThemeDialog extends StatelessWidget {
       };
 
   Widget _wallpaperRow(BuildContext context, ColorScheme scheme) {
-    final supported = Platform.isWindows;
+    final supported = WallpaperColor.supported;
     final l10n = l10nOf(context);
     return Container(
       padding: const EdgeInsets.all(12),

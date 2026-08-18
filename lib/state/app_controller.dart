@@ -659,7 +659,7 @@ class AppController extends ChangeNotifier {
     Process? proc;
     try {
       proc = await Process.start(
-        '$engineDir${Platform.pathSeparator}ffmpeg.exe',
+        FfmpegManager.exePath(engineDir),
         runArgs,
         workingDirectory: engineDir,
         includeParentEnvironment: true,

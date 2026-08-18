@@ -719,12 +719,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String engineDirMissing(String dir) {
-    return 'ffmpeg.exe not found in the specified folder: $dir';
+    return 'ffmpeg not found in the specified folder: $dir';
   }
 
   @override
   String get engineNotFound =>
-      'ffmpeg.exe not found. Specify its folder manually in settings.';
+      'ffmpeg not found. Specify its folder manually in settings.';
 
   @override
   String launchFailed(String err) {

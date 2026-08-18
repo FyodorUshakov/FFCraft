@@ -7,6 +7,8 @@ import 'package:ffi/ffi.dart';
 import 'package:flutter/material.dart' show Color;
 import 'package:win32/win32.dart';
 
+import 'ffmpeg_manager.dart';
+
 /// Windows 壁纸取色：
 /// 1. 读取壁纸文件路径（SPI_GETDESKWALLPAPER）
 /// 2. 用 ffmpeg 把壁纸缩到 8x8，统计主色调
@@ -37,7 +39,7 @@ class WallpaperColor {
   static Future<Color?> _dominantColor(String ffmpegDir, String path) async {
     try {
       final proc = await Process.start(
-        '$ffmpegDir${Platform.pathSeparator}ffmpeg.exe',
+        FfmpegManager.exePath(ffmpegDir),
         [
           '-hide_banner', '-loglevel', 'error', '-y',
           '-i', path,
