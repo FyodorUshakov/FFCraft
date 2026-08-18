@@ -26,6 +26,12 @@
 	<string>$(PRODUCT_COPYRIGHT)</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>FFCraft 需要访问桌面上的音视频文件进行转码</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>FFCraft 需要访问“文稿”中的音视频文件进行转码</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>FFCraft 需要访问“下载”中的音视频文件进行转码</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

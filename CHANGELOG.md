@@ -1,5 +1,12 @@
 # 更新日志 / Changelog
 
+## [1.6.8] - 2026-08-18
+
+### 修复
+- macOS 版关闭 App Sandbox：此前沙盒阻止启动外部 ffmpeg，
+  转码报「Operation not permitted」，现可正常调用 Homebrew 等路径的 ffmpeg
+- macOS 首次访问桌面/文稿/下载目录时按系统提示授权（已补充用途说明）
+
 ## [1.6.7] - 2026-08-18
 
 ### 修复
