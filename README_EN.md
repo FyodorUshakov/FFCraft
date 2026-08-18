@@ -119,7 +119,7 @@ Outputs under `dist\`:
 | Artifact | Description |
 | --- | --- |
 | `FFCraft\` | Portable folder, copy and run |
-| `FFCraft_v1.7.1_portable.zip` | Portable archive; unzip and double-click `FFCraft.exe` |
+| `FFCraft_v1.7.2_portable.zip` | Portable archive; unzip and double-click `FFCraft.exe` |
 
 ## License
 

@@ -79,7 +79,10 @@ class ConcatSettings {
       final src = extensionOf(first);
       ext = ['mp4', 'mkv', 'mov', 'webm', 'ts', 'avi', 'flv'].contains(src)
           ? src
-          : (isVideoExtension(first) ? 'mp4' : 'm4a');
+          : (isVideoExtension(first)
+              ? 'mp4'
+              // 纯音频源沿用其自身扩展名（flac→flac），避免塞进不兼容的 m4a
+              : (audioExtensions.contains(src) ? src : 'm4a'));
     }
     return safeOutputPath(outDir, first, '${stem}_concat', ext);
   }

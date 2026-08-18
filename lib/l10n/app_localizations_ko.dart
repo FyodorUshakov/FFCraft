@@ -486,6 +486,15 @@ class AppLocalizationsKo extends AppLocalizations {
       '각 구간을 WAV(PCM)로 변환한 뒤 연결해 설정이 다른 음원에 대응';
 
   @override
+  String get moveUp => '위로 이동';
+
+  @override
+  String get moveDown => '아래로 이동';
+
+  @override
+  String get concatOrderHint => '연결은 큐 위에서 아래 순서로 진행됩니다. ↑↓로 순서 조정';
+
+  @override
   String get concatInfoCopy =>
       '복사 모드（기본）는 재인코딩 없이 직접 연결합니다: 빠르고 무손실이지만 모든 구간의 코덱·샘플 레이트·프레임 레이트 등이 같아야 합니다.';
 
@@ -723,7 +732,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get stopping => '중지 중…';
 
   @override
-  String get decodeWarning => '⚠ 디코딩 오류/경고가 발생했습니다. 원본 파일이 온전한지 확인하세요';
+  String get decodeCheckNcm =>
+      '⚠ 디코딩 오류/경고 감지: 먼저 소스가 NetEase Cloud Music 다운로드인지 확인하세요(그 FLAC에는 재생에 영향 없는 꼬리 데이터가 자주 포함됨)';
+
+  @override
+  String get decodeWarning =>
+      '⚠ NetEase Cloud Music 경우가 아니라면 원본 파일이 실제로 손상되었는지 확인하세요';
 
   @override
   String get doneWithWarning => '완료（디코딩 경고 있음）';

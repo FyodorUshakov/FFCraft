@@ -993,6 +993,24 @@ abstract class AppLocalizations {
   /// **'各段转码为 WAV（PCM）后拼接，兼容参数不一致的音源'**
   String get compatReencodeAudioHint;
 
+  /// No description provided for @moveUp.
+  ///
+  /// In zh, this message translates to:
+  /// **'上移'**
+  String get moveUp;
+
+  /// No description provided for @moveDown.
+  ///
+  /// In zh, this message translates to:
+  /// **'下移'**
+  String get moveDown;
+
+  /// No description provided for @concatOrderHint.
+  ///
+  /// In zh, this message translates to:
+  /// **'拼接按队列从上到下依次进行，可用 ↑↓ 调整顺序'**
+  String get concatOrderHint;
+
   /// No description provided for @concatInfoCopy.
   ///
   /// In zh, this message translates to:
@@ -1419,10 +1437,16 @@ abstract class AppLocalizations {
   /// **'正在停止…'**
   String get stopping;
 
+  /// No description provided for @decodeCheckNcm.
+  ///
+  /// In zh, this message translates to:
+  /// **'⚠ 检测到解码错误/警告：请先确认源文件是否来自网易云音乐下载（其 FLAC 常带尾部附加数据，不影响播放）'**
+  String get decodeCheckNcm;
+
   /// No description provided for @decodeWarning.
   ///
   /// In zh, this message translates to:
-  /// **'⚠ 输出中存在解码错误/警告，请检查源文件是否完整'**
+  /// **'⚠ 若排除网易云音乐的情况，请检查源文件是否真的损坏'**
   String get decodeWarning;
 
   /// No description provided for @doneWithWarning.

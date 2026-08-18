@@ -44,6 +44,7 @@ class MediaInfo {
     String? sampleFormat;
     int? bitDepth;
     String? bitDepthLabel;
+    int? annotatedBits;
     String? videoCodec;
     String? resolution;
     int? width;
@@ -61,17 +62,19 @@ class MediaInfo {
     if (br != null) bitrate = double.parse(br.group(1)!).round();
 
     final audio = RegExp(
-      r'Stream #\d+:\d+.*?Audio:\s*([^,\s]+)(?:\s*\([^)]*\))?,\s*(\d+)\s*Hz,\s*([^,\s]+)(?:,\s*([^,\s]+))?',
+      r'Stream #\d+:\d+.*?Audio:\s*([^,\s]+)(?:\s*\([^)]*\))?,\s*(\d+)\s*Hz,\s*([^,\s]+)(?:,\s*([^,\s]+))?(?:\s*\((\d+)\s+bit\))?',
     ).firstMatch(text);
     if (audio != null) {
       audioCodec = audio.group(1);
       sampleRate = audio.group(2);
       channels = audio.group(3);
       sampleFormat = audio.group(4);
+      annotatedBits = int.tryParse(audio.group(5) ?? '');
     }
 
     // 位深：优先 bits_per_raw_sample（如 pcm_s24le 以 s32 存储但真实位深为 24），
-    // 否则按采样格式推断；仅对无损格式显示
+    // 其次 ffmpeg 括号标注（如 flac 24bit 显示 "s32 (24 bit)"），
+    // 最后按采样格式推断；仅对无损格式显示
     final codec = audioCodec ?? '';
     final isLossless = codec.contains('pcm') ||
         const {
@@ -82,7 +85,8 @@ class MediaInfo {
       final raw =
           RegExp(r'bits_per_raw_sample=(\d+)').firstMatch(text)?.group(1);
       final rawDepth = raw == null ? null : int.tryParse(raw);
-      bitDepth = rawDepth ?? _sampleFmtDepth(sampleFormat);
+      bitDepth =
+          annotatedBits ?? rawDepth ?? _sampleFmtDepth(sampleFormat);
       bitDepthLabel = _depthLabel(bitDepth, sampleFormat);
     }
 

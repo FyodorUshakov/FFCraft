@@ -471,6 +471,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get compatReencodeAudioHint => '各段转码为 WAV（PCM）后拼接，兼容参数不一致的音源';
 
   @override
+  String get moveUp => '上移';
+
+  @override
+  String get moveDown => '下移';
+
+  @override
+  String get concatOrderHint => '拼接按队列从上到下依次进行，可用 ↑↓ 调整顺序';
+
+  @override
   String get concatInfoCopy =>
       '复制模式（默认）直接拼接，不重编码、速度快、质量无损；要求各片段的编码、采样率、帧率等参数完全一致。';
 
@@ -707,7 +716,11 @@ class AppLocalizationsZh extends AppLocalizations {
   String get stopping => '正在停止…';
 
   @override
-  String get decodeWarning => '⚠ 输出中存在解码错误/警告，请检查源文件是否完整';
+  String get decodeCheckNcm =>
+      '⚠ 检测到解码错误/警告：请先确认源文件是否来自网易云音乐下载（其 FLAC 常带尾部附加数据，不影响播放）';
+
+  @override
+  String get decodeWarning => '⚠ 若排除网易云音乐的情况，请检查源文件是否真的损坏';
 
   @override
   String get doneWithWarning => '完成（有解码警告）';
@@ -1203,6 +1216,15 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get compatReencodeAudioHint => '各段轉碼為 WAV（PCM）後串接，相容參數不一致的音源';
 
   @override
+  String get moveUp => '上移';
+
+  @override
+  String get moveDown => '下移';
+
+  @override
+  String get concatOrderHint => '串接依佇列由上到下進行，可用 ↑↓ 調整順序';
+
+  @override
   String get concatInfoCopy =>
       '複製模式（預設）直接串接，不重新編碼、速度快、品質無損；要求各段編碼、取樣率、影格率等參數完全一致。';
 
@@ -1439,7 +1461,11 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get stopping => '正在停止…';
 
   @override
-  String get decodeWarning => '⚠ 輸出中存在解碼錯誤/警告，請檢查來源檔是否完整';
+  String get decodeCheckNcm =>
+      '⚠ 偵測到解碼錯誤/警告：請先確認來源檔是否來自網易雲音樂下載（其 FLAC 常帶尾部附加資料，不影響播放）';
+
+  @override
+  String get decodeWarning => '⚠ 若排除網易雲音樂的情況，請檢查來源檔是否真的損壞';
 
   @override
   String get doneWithWarning => '完成（有解碼警告）';

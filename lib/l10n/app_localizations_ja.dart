@@ -482,6 +482,15 @@ class AppLocalizationsJa extends AppLocalizations {
       '各セグメントを WAV（PCM）に変換してから結合し、設定が異なる音源に対応';
 
   @override
+  String get moveUp => '上へ移動';
+
+  @override
+  String get moveDown => '下へ移動';
+
+  @override
+  String get concatOrderHint => '結合はキュー上から下の順に行われます。↑↓で順序を変更';
+
+  @override
   String get concatInfoCopy =>
       'コピーモード（既定）は再エンコードせず直接結合：高速・無劣化。ただし全セグメントのコーデック・サンプリングレート・フレームレートなどを揃える必要があります';
 
@@ -719,7 +728,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get stopping => '停止中…';
 
   @override
-  String get decodeWarning => '⚠ デコードのエラー/警告が発生しました。元ファイルの完全性を確認してください';
+  String get decodeCheckNcm =>
+      '⚠ デコードのエラー/警告を検出：まずソースが NetEase Cloud Music からのダウンロードか確認してください（その FLAC には再生に影響しない末尾データがよく付きます）';
+
+  @override
+  String get decodeWarning =>
+      '⚠ NetEase Cloud Music のケースを除外できる場合は、元ファイルが実際に破損していないか確認してください';
 
   @override
   String get doneWithWarning => '完了（デコード警告あり）';

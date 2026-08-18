@@ -68,6 +68,15 @@ void main() {
       expect(job.args, containsAllInOrder(['-f', 'concat', '-safe', '0']));
       expect(job.args, containsAllInOrder(['-c', 'copy']));
     });
+
+    test('纯音频源复制模式沿用源扩展名（flac→flac）', () {
+      final s = ConcatSettings();
+      final out = s.outputPathFor(
+        [r'D:\c\a.flac', r'D:\c\b.flac'],
+        outDir,
+      );
+      expect(out, endsWith('_concat.flac'));
+    });
   });
 
   test('kind 持久化往返', () {

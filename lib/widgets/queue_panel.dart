@@ -129,15 +129,25 @@ class _QueuePanelState extends State<QueuePanel> {
                           icon: const Icon(Icons.add, size: 18),
                           label: Text(l10n.addFiles),
                             ),
-                            TextButton.icon(
-                              onPressed: c.running ? null : _pickFolder,
+                        TextButton.icon(
+                          onPressed: c.running ? null : _pickFolder,
                           icon: const Icon(
                                   Icons.create_new_folder_outlined,
                                   size: 18),
                           label: Text(l10n.addFolder),
                             ),
-                          ],
-                        ),
+                        ],
+                      ),
+                        if (c.mode == AppMode.concat) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            l10n.concatOrderHint,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(color: scheme.onSurfaceVariant),
+                          ),
+                        ],
                     ],
                   ),
                 ),
@@ -209,9 +219,14 @@ class _QueuePanelState extends State<QueuePanel> {
       separatorBuilder: (_, _) => const Divider(height: 1, indent: 68),
       itemBuilder: (context, index) {
         final item = c.items[index];
+        final canReorder = c.mode == AppMode.concat &&
+            !c.running &&
+            c.items.length > 1;
         return ListTile(
           dense: true,
-          leading: _StatusIcon(item: item),
+          leading: canReorder
+              ? _OrderBadge(number: index + 1, scheme: scheme)
+              : _StatusIcon(item: item),
           title: Text(
             item.name,
             maxLines: 1,
@@ -284,13 +299,41 @@ class _QueuePanelState extends State<QueuePanel> {
               ],
             ],
           ),
-                  trailing: c.running
-              ? null
-              : IconButton(
-                  tooltip: l10n.remove,
-                  icon: const Icon(Icons.close, size: 18),
-                  onPressed: () => c.removeAt(index),
-                ),
+          trailing: canReorder
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      tooltip: l10n.moveUp,
+                      visualDensity: VisualDensity.compact,
+                      icon: const Icon(Icons.keyboard_arrow_up, size: 20),
+                      onPressed: index > 0
+                          ? () => c.moveItem(index, index - 1)
+                          : null,
+                    ),
+                    IconButton(
+                      tooltip: l10n.moveDown,
+                      visualDensity: VisualDensity.compact,
+                      icon: const Icon(Icons.keyboard_arrow_down, size: 20),
+                      onPressed: index < c.items.length - 1
+                          ? () => c.moveItem(index, index + 1)
+                          : null,
+                    ),
+                    IconButton(
+                      tooltip: l10n.remove,
+                      visualDensity: VisualDensity.compact,
+                      icon: const Icon(Icons.close, size: 18),
+                      onPressed: () => c.removeAt(index),
+                    ),
+                  ],
+                )
+              : (c.running
+                  ? null
+                  : IconButton(
+                      tooltip: l10n.remove,
+                      icon: const Icon(Icons.close, size: 18),
+                      onPressed: () => c.removeAt(index),
+                    )),
         );
       },
     );
@@ -328,6 +371,34 @@ class _StatusIcon extends StatelessWidget {
       FileStatus.failed => Icon(Icons.error, color: scheme.error),
       FileStatus.cancelled => Icon(Icons.block, color: scheme.outline),
     };
+  }
+}
+
+class _OrderBadge extends StatelessWidget {
+  const _OrderBadge({required this.number, required this.scheme});
+
+  final int number;
+  final ColorScheme scheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 26,
+      height: 26,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: scheme.primaryContainer,
+        shape: BoxShape.circle,
+      ),
+      child: Text(
+        '$number',
+        style: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: scheme.onPrimaryContainer,
+        ),
+      ),
+    );
   }
 }
 

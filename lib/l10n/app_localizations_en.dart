@@ -502,6 +502,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'Re-encode each segment to WAV (PCM) before joining for mixed settings';
 
   @override
+  String get moveUp => 'Move up';
+
+  @override
+  String get moveDown => 'Move down';
+
+  @override
+  String get concatOrderHint =>
+      'Segments are joined top to bottom; use ↑↓ to reorder';
+
+  @override
   String get concatInfoCopy =>
       'Copy mode (default) joins directly without re-encoding: fast and lossless, but all segments must match in codec, sample rate, frame rate, etc.';
 
@@ -743,8 +753,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stopping => 'Stopping…';
 
   @override
+  String get decodeCheckNcm =>
+      '⚠ Decode errors/warnings detected: first check whether the source is downloaded from NetEase Cloud Music (its FLAC files often carry extra tail data that does not affect playback)';
+
+  @override
   String get decodeWarning =>
-      '⚠ Decode errors/warnings occurred; please check whether the source file is intact';
+      '⚠ If the source is not from NetEase Cloud Music, please check whether the file is actually corrupted';
 
   @override
   String get doneWithWarning => 'Done (with decode warnings)';

@@ -138,4 +138,26 @@ void main() {
     expect(find.text('Language'), findsOneWidget);
   });
 
+  group('拼接顺序调整', () {
+    test('moveItem 前后移动', () {
+      final c = AppController();
+      c.addFiles([r'D:\a.mp3', r'D:\b.mp3', r'D:\c.mp3']);
+      expect(c.items.map((i) => i.name).toList(),
+          ['a.mp3', 'b.mp3', 'c.mp3']);
+      c.moveItem(0, 2);
+      expect(c.items.map((i) => i.name).toList(),
+          ['b.mp3', 'c.mp3', 'a.mp3']);
+      c.moveItem(2, 0);
+      expect(c.items.map((i) => i.name).toList(),
+          ['a.mp3', 'b.mp3', 'c.mp3']);
+    });
+
+    test('越界移动被忽略', () {
+      final c = AppController();
+      c.addFiles([r'D:\a.mp3', r'D:\b.mp3']);
+      c.moveItem(0, 5);
+      expect(c.items.map((i) => i.name).toList(), ['a.mp3', 'b.mp3']);
+    });
+  });
+
 }

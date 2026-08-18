@@ -174,6 +174,16 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// 拼接顺序调整：把 [from] 处的队列项移动到 [to]。
+  void moveItem(int from, int to) {
+    if (running) return;
+    if (from < 0 || from >= items.length) return;
+    if (to < 0 || to >= items.length) return;
+    final item = items.removeAt(from);
+    items.insert(to, item);
+    notifyListeners();
+  }
+
   void _initItemMeta(QueueItem item) {
     try {
       final f = File(item.path);
@@ -747,10 +757,11 @@ class AppController extends ChangeNotifier {
     }
 
     final ok = code == 0 && File(job.outputPath).existsSync();
-    if (ok && sawError) {
-      if (await _isBenignTailWatermark(job, duration, errorLines)) {
-        // 文件尾附加数据（典型：网易云 ncm 解出的 FLAC 水印尾巴）：
-        // 输出完整可播放，不损坏文件，降级为提示而非警告。
+    if (sawError) {
+      // 先判断是否为网易云下载的尾水印（可忽略），再引导排查文件是否损坏
+      final benign =
+          ok && await _isBenignTailWatermark(job, duration, errorLines);
+      if (benign) {
         addLog(l10n(
           (a) => a.decodeTailInfo,
           '   ℹ 输出完整可正常播放；源文件尾部附加数据（常见于网易云下载的 FLAC）已忽略',
@@ -758,21 +769,31 @@ class AppController extends ChangeNotifier {
         _finishJob(job, item, true, '');
         return;
       }
-      addLog(l10n((a) => a.decodeWarning, '   ⚠ 输出中存在解码错误/警告，请检查源文件是否完整'));
-      if (item != null) {
-        item.hasWarning = true;
-      } else if (mode == AppMode.concat) {
-        for (final i in items) {
-          i.hasWarning = true;
+      // 引导排查：先确认是否网易云音乐下载，再看文件是否真的损坏
+      addLog(l10n(
+        (a) => a.decodeCheckNcm,
+        '   ⚠ 检测到解码错误/警告：请先确认源文件是否来自网易云音乐下载',
+      ));
+      addLog(l10n(
+        (a) => a.decodeWarning,
+        '   ⚠ 若排除网易云情况，请检查源文件是否真的损坏',
+      ));
+      if (ok) {
+        if (item != null) {
+          item.hasWarning = true;
+        } else if (mode == AppMode.concat) {
+          for (final i in items) {
+            i.hasWarning = true;
+          }
         }
+        _finishJob(
+          job,
+          item,
+          true,
+          l10n((a) => a.doneWithWarning, '完成（有解码警告）'),
+        );
+        return;
       }
-      _finishJob(
-        job,
-        item,
-        true,
-        l10n((a) => a.doneWithWarning, '完成（有解码警告）'),
-      );
-      return;
     }
     _finishJob(
       job,

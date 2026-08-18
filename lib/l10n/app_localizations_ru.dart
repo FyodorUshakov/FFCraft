@@ -502,6 +502,16 @@ class AppLocalizationsRu extends AppLocalizations {
       'Перекодировать каждый сегмент в WAV (PCM) перед склейкой для разных параметров';
 
   @override
+  String get moveUp => 'Вверх';
+
+  @override
+  String get moveDown => 'Вниз';
+
+  @override
+  String get concatOrderHint =>
+      'Склейка выполняется сверху вниз по очереди; используйте ↑↓ для смены порядка';
+
+  @override
   String get concatInfoCopy =>
       'Режим копирования (по умолчанию) склеивает напрямую без перекодирования: быстро и без потерь, но сегменты должны совпадать по кодеку, частоте дискретизации, кадрам и т.д.';
 
@@ -743,8 +753,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stopping => 'Остановка…';
 
   @override
+  String get decodeCheckNcm =>
+      '⚠ Обнаружены ошибки/предупреждения декодирования: сначала проверьте, скачан ли файл из NetEase Cloud Music (их FLAC часто содержат безвредные данные в конце)';
+
+  @override
   String get decodeWarning =>
-      '⚠ Обнаружены ошибки/предупреждения декодирования; проверьте целостность исходного файла';
+      '⚠ Если файл не из NetEase Cloud Music, проверьте, действительно ли он повреждён';
 
   @override
   String get doneWithWarning => 'Готово (с предупреждениями декодирования)';

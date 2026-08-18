@@ -48,6 +48,17 @@ Input #0, wav, from 'x.wav':
     expect(info.bitDepthLabel, '16-bit');
   });
 
+  test('FLAC 24-bit 括号标注识别（s32 (24 bit)）', () {
+    final info = MediaInfo.parse('''
+Input #0, flac, from 'Ado - おどるポンポコリン.flac':
+  Duration: 00:03:14.53, start: 0.000000, bitrate: 1900 kb/s
+  Stream #0:0: Audio: flac, 48000 Hz, stereo, s32 (24 bit)
+''');
+    expect(info.bitDepth, 24);
+    expect(info.bitDepthLabel, '24-bit');
+    expect(info.sampleRate, '48000');
+  });
+
   test('浮点 WAV 标注 float', () {
     final info = MediaInfo.parse('''
   Stream #0:0: Audio: pcm_f32le, 44100 Hz, stereo, flt, 4233 kb/s
