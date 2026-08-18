@@ -55,9 +55,6 @@ static void my_application_activate(GApplication* application) {
   gtk_window_set_default_size(window, 1280, 720);
 
   g_autoptr(FlDartProject) project = fl_dart_project_new();
-  // 在无 GPU 的虚拟化环境（如 WSLg/llvmpipe）下 Impeller 的 GLES 后端
-  // 无法完成首帧渲染，窗口因此永不显示；回退到 Skia OpenGL。
-  fl_dart_project_set_enable_impeller(project, FALSE);
   fl_dart_project_set_dart_entrypoint_arguments(
       project, self->dart_entrypoint_arguments);
 
