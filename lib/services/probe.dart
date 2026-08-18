@@ -15,6 +15,9 @@ class MediaInfo {
   final String? resolution;
   final int? width;
   final int? height;
+  final String? sampleFormat;
+  final int? bitDepth;
+  final String? bitDepthLabel;
 
   const MediaInfo({
     this.durationSec,
@@ -26,6 +29,9 @@ class MediaInfo {
     this.resolution,
     this.width,
     this.height,
+    this.sampleFormat,
+    this.bitDepth,
+    this.bitDepthLabel,
   });
 
   /// 从 ffmpeg -i 的标准错误输出解析。
@@ -35,6 +41,9 @@ class MediaInfo {
     String? audioCodec;
     String? sampleRate;
     String? channels;
+    String? sampleFormat;
+    int? bitDepth;
+    String? bitDepthLabel;
     String? videoCodec;
     String? resolution;
     int? width;
@@ -52,12 +61,29 @@ class MediaInfo {
     if (br != null) bitrate = double.parse(br.group(1)!).round();
 
     final audio = RegExp(
-      r'Stream #\d+:\d+.*?Audio:\s*([^,\s]+)(?:\s*\([^)]*\))?,\s*(\d+)\s*Hz,\s*([^,\s]+)',
+      r'Stream #\d+:\d+.*?Audio:\s*([^,\s]+)(?:\s*\([^)]*\))?,\s*(\d+)\s*Hz,\s*([^,\s]+)(?:,\s*([^,\s]+))?',
     ).firstMatch(text);
     if (audio != null) {
       audioCodec = audio.group(1);
       sampleRate = audio.group(2);
       channels = audio.group(3);
+      sampleFormat = audio.group(4);
+    }
+
+    // 位深：优先 bits_per_raw_sample（如 pcm_s24le 以 s32 存储但真实位深为 24），
+    // 否则按采样格式推断；仅对无损格式显示
+    final codec = audioCodec ?? '';
+    final isLossless = codec.contains('pcm') ||
+        const {
+          'flac', 'alac', 'ape', 'wv', 'tta', 'wavpack',
+          'mlp', 'truehd', 'aiff',
+        }.contains(codec);
+    if (isLossless) {
+      final raw =
+          RegExp(r'bits_per_raw_sample=(\d+)').firstMatch(text)?.group(1);
+      final rawDepth = raw == null ? null : int.tryParse(raw);
+      bitDepth = rawDepth ?? _sampleFmtDepth(sampleFormat);
+      bitDepthLabel = _depthLabel(bitDepth, sampleFormat);
     }
 
     final video = RegExp(
@@ -81,8 +107,40 @@ class MediaInfo {
       resolution: resolution,
       width: width,
       height: height,
+      sampleFormat: sampleFormat,
+      bitDepth: bitDepth,
+      bitDepthLabel: bitDepthLabel,
     );
   }
+}
+
+/// 采样格式 → 位深（整数 PCM）。
+int? _sampleFmtDepth(String? fmt) {
+  switch (fmt) {
+    case 's16':
+    case 's16p':
+      return 16;
+    case 's24':
+      return 24;
+    case 's32':
+    case 's32p':
+      return 32;
+    case 'flt':
+    case 'fltp':
+      return 32;
+    case 'dbl':
+    case 'dblp':
+      return 64;
+  }
+  return null;
+}
+
+/// 位深展示文案；浮点格式单独标注。
+String? _depthLabel(int? depth, String? fmt) {
+  if (depth == null) return null;
+  if (fmt == 'flt' || fmt == 'fltp') return '32-bit float';
+  if (fmt == 'dbl' || fmt == 'dblp') return '64-bit float';
+  return '$depth-bit';
 }
 
 /// 用 ffmpeg 探测媒体信息（时长、码率、流信息等）。

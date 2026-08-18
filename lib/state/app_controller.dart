@@ -198,6 +198,7 @@ class AppController extends ChangeNotifier {
     item.durationSec = info.durationSec;
     item.bitrateKbps = info.bitrateKbps;
     item.audioCodec = info.audioCodec;
+    item.bitDepthLabel = info.bitDepthLabel;
     notifyListeners();
   }
 

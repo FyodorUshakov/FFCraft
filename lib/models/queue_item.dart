@@ -25,6 +25,7 @@ class QueueItem {
   String? format; // 原格式（扩展名）
   int? bitrateKbps;
   String? audioCodec;
+  String? bitDepthLabel; // 无损音源位深，如 24-bit
   bool hasWarning = false; // 完成但解码/处理过程有警告
 
   String get name => path.split(RegExp(r'[\\/]')).last;
@@ -45,6 +46,9 @@ class QueueItem {
     }
     if (bitrateKbps != null && bitrateKbps! > 0) {
       parts.add('$bitrateKbps kbps');
+    }
+    if (bitDepthLabel != null && bitDepthLabel!.isNotEmpty) {
+      parts.add(bitDepthLabel!);
     }
     return parts.join(' · ');
   }
